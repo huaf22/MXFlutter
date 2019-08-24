@@ -1,5 +1,9 @@
 package com.imatrixteam.jsflutter;
 
+import com.eclipsesource.v8.V8Object;
+
+import java.util.List;
+
 public class MXJSExecutor {
     private JsContext jsContext;
     private JavaScriptThread javaScriptThread;
@@ -39,6 +43,11 @@ public class MXJSExecutor {
 
     interface ExecuteScriptCallback{
         void onComplete();
+    }
+
+
+    public void invokeJSValue(V8Object jsValue, String method, List args, MXJSValueCallback callback){
+
     }
 }
 

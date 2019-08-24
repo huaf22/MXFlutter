@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Map;
 
 import io.flutter.app.FlutterActivity;
@@ -17,6 +18,9 @@ public class MXFlutterActivity extends FlutterActivity {
 
   MXJSFlutterEngine mMXJSFlutterEngine;
 
+  private boolean isFlutterEngineIsDidRender;
+  private ArrayList<MethodCall> callFlutterQueue;
+
   //Flutter通道
   private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.flutter_main_channel";
   MethodChannel jsFlutterAppChannel;
@@ -25,6 +29,14 @@ public class MXFlutterActivity extends FlutterActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+  }
+
+  public void setup(){
+    callFlutterQueue = new ArrayList<>(2);
+    isFlutterEngineIsDidRender = true;
+    for(MethodCall call : callFlutterQueue){
+      jsFlutterAppChannel.invokeMethod(call.method,call.arguments);
+    }
   }
 
   public void setupChannel(){
@@ -62,8 +74,13 @@ public class MXFlutterActivity extends FlutterActivity {
     try {
       JSONObject jsonObject = new JSONObject();
       jsonObject.put("routeName",routeName);
-      jsonObject.put("routeName",widgetData);
-      jsFlutterAppChannel.invokeMethod("reloadApp",jsonObject.toString());
+      jsonObject.put("widgetData",widgetData);
+      MethodCall call = new MethodCall("reloadApp",jsonObject.toString());
+      if(isFlutterEngineIsDidRender){
+        callFlutterQueue.add(call);
+        return;
+      }
+      jsFlutterAppChannel.invokeMethod(call.method,call.arguments);
     } catch (JSONException e) {
       e.printStackTrace();
     }

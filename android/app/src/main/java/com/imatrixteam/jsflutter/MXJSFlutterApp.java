@@ -43,6 +43,26 @@ public class MXJSFlutterApp {
 
     private void setupJSEngine() {
 
+        jsEngine = new MXJSEngine(mContext);
+
+        String jsBasePath = "";
+
+        //JSFlutter JS运行库搜索路径
+        String jsFlutterFrameworkDir = "js_flutter_js_framework_lib";
+        jsEngine.addSearchDir(jsFlutterFrameworkDir);
+
+        //app业务代码搜索路径
+        String jsAppCoreDir = "js_flutter_scr/app_test";
+        jsEngine.addSearchDir(jsAppCoreDir);
+
+        String jsBasicLibPath = jsFlutterFrameworkDir + "/" +  "js_basic_lib.js";
+        jsExecutor.executeScriptPath(jsBasicLibPath, new MXJSExecutor.ExecuteScriptCallback() {
+            @Override
+            public void onComplete(Object value) {
+
+            }
+        });
+
     }
 
     void setUpChannel(BinaryMessenger flutterViewController) {
@@ -86,7 +106,7 @@ public class MXJSFlutterApp {
 
         jsExecutor.executeScriptPath("main.js", new MXJSExecutor.ExecuteScriptCallback() {
             @Override
-            public void onComplete() {
+            public void onComplete(Object value) {
 
             }
         });
@@ -108,11 +128,12 @@ public class MXJSFlutterApp {
 
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
             jsAppObj = jsApp;
-            jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
+            jsFlutterEngine.callFlutterWidgetChannelWithMethodName(widgetData);
         }
 
-        public void callFlutterWidgetChannel(String method, V8Array arguments) {
-
+        //js -> Dart
+        public void callFlutterWidgetChannel(String methodName, V8Array args) {
+            jsFlutterAppChannel.invokeMethod(methodName, args);
         }
     }
 }

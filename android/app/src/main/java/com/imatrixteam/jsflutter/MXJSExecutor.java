@@ -21,18 +21,16 @@ public class MXJSExecutor {
     }
 
     public void executeScriptAsync(String script, ExecuteScriptCallback callback) {
-        runtime.executeScript(script);
-        callback.onComplete();
+        callback.onComplete(runtime.executeScript(script));
     }
 
     public void executeScriptPath(String path, ExecuteScriptCallback callback) {
         String script = FileUtils.getFromAssets(context, path);
-        runtime.executeScript(script);
-        callback.onComplete();
+        callback.onComplete(runtime.executeScript(script));
     }
 
-    public void executeMXJSBlockOnJSThread() {
-
+    public void executeScript(String script, ExecuteScriptCallback callback) {
+        callback.onComplete(runtime.executeScript(script));
     }
 
     private boolean isValid() {
@@ -47,7 +45,7 @@ public class MXJSExecutor {
     }
 
     interface ExecuteScriptCallback{
-        void onComplete();
+        void onComplete(Object value);
     }
 
     public void invokeJSValue(V8Object jsValue, String method, Object args, MXJSValueCallback callback){

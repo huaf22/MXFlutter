@@ -7,3 +7,12 @@
 build/
 
 .flutter-plugins
+
+.idea/
+android/.gradle/
+android/.idea/
+android/android.iml
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/liujiaohan.xcuserdatad/
+ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ios/Runner.xcworkspace/xcuserdata/liujiaohan.xcuserdatad/

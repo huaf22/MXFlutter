@@ -53,4 +53,8 @@ public class MXJSFlutterEngine {
     public boolean showPage(String pageName) {
         return true;
     }
+
+    public void callFlutterReloadAppWithJSWidgetData(String widgetData) {
+        ((MXFlutterActivity)mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
+    }
 }

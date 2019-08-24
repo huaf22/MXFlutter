@@ -128,7 +128,7 @@ public class MXJSFlutterApp {
 
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
             jsAppObj = jsApp;
-            jsFlutterEngine.callFlutterWidgetChannelWithMethodName(widgetData);
+            jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
         }
 
         //js -> Dart

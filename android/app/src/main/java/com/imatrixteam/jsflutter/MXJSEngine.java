@@ -94,6 +94,10 @@ public class MXJSEngine {
         mxjsEngine.jsExecutor.runtime.registerJavaMethod(JSAPI_require, "JSAPI_require");
     }
 
+    public void callFlutterReloadAppWithJSWidgetData(String widgetData) {
+        ((MXFlutterActivity)mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
+    }
+
     public void addSearchDir(String dir) {
         if (TextUtils.isEmpty(dir) || searchDirArray.indexOf(dir) != -1) {
             return;

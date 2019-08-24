@@ -3,7 +3,6 @@ package com.imatrixteam.jsflutter;
 import com.eclipsesource.v8.V8Object;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -23,7 +22,7 @@ public class MXJSFlutterApp {
 
     //Flutter通道
     private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
-    static MethodChannel sJsFlutterAppChannel;
+    MethodChannel jsFlutterAppChannel;
 
     public MXJSFlutterApp initWithAppName(String appName, MXJSFlutterEngine jsFlutterEngine, String appRootPath) {
         this.appName = appName;
@@ -43,8 +42,8 @@ public class MXJSFlutterApp {
 
     void setUpChannel(BinaryMessenger flutterViewController) {
         final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
-        sJsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
-        sJsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+        jsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
+        jsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
                 MXJSFlutterApp app = (MXJSFlutterApp)_weakThis.get();
@@ -59,7 +58,7 @@ public class MXJSFlutterApp {
     }
 
     void callFlutterWidgetChannelWithMethodName(String methodName, Object args){
-        sJsFlutterAppChannel.invokeMethod(methodName, args);
+        jsFlutterAppChannel.invokeMethod(methodName, args);
     }
 
 

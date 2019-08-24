@@ -34,7 +34,7 @@ public class MXJSFlutterApp {
         this.jsFlutterEngine = jsFlutterEngine;
         jsFlutterEngineStatic = jsFlutterEngine;
 
-        setUpChannel();
+        setUpChannel(((MXFlutterActivity)context).getFlutterView());
         setupJSEngine();
 
         return this;

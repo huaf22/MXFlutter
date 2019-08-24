@@ -7,24 +7,29 @@ import java.lang.ref.WeakReference;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import android.content.Context;
+
+import com.eclipsesource.v8.V8Array;
 
 public class MXJSFlutterApp {
 
     static MXJSFlutterEngine jsFlutterEngineStatic;
 
+    private Context mContext;
+
     private String appName;
     private MXJSFlutterEngine jsFlutterEngine;
 
+    private V8Object jsAppObj;
     private MXJSEngine jsEngine;
     private MXJSExecutor jsExecutor;
-
-    private V8Object jsAppObj;
 
     //Flutter通道
     private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
     MethodChannel jsFlutterAppChannel;
 
-    public MXJSFlutterApp initWithAppName(String appName, MXJSFlutterEngine jsFlutterEngine, String appRootPath) {
+    public MXJSFlutterApp initWithAppName(Context context, String appName, MXJSFlutterEngine jsFlutterEngine, String appRootPath) {
+        this.mContext = context;
         this.appName = appName;
         this.jsFlutterEngine = jsFlutterEngine;
         jsFlutterEngineStatic = jsFlutterEngine;
@@ -67,19 +72,47 @@ public class MXJSFlutterApp {
     }
 
     public void runApp() {
-
+        runAppWithPageName("");
     }
 
     public void runAppWithPageName(String pageName) {
+        MXNativeJSFlutterApp MXNativeJSFlutterApp = new MXNativeJSFlutterApp();
+        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
+                "setCurrentJSApp", new Class<?>[]{V8Object.class});
+        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp,
+                "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
+        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp,
+                "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{V8Object.class, V8Array.class});
 
+        jsExecutor.executeScriptPath("main.js", new MXJSExecutor.ExecuteScriptCallback() {
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
-    private void exitApp() {
+    public void exitApp() {
         this.jsAppObj = null;
         this.jsEngine = null;
     }
 
     private MXJSExecutor jsExecutor() {
-        return this.jsEngine.
+        return this.jsEngine.jsExecutor;
+    }
+
+    class MXNativeJSFlutterApp {
+        public void setCurrentJSApp(V8Object jsApp) {
+            jsAppObj = jsApp;
+        }
+
+        public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
+            jsAppObj = jsApp;
+            jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
+        }
+
+        public void callFlutterWidgetChannel(String method, V8Array arguments) {
+
+        }
     }
 }

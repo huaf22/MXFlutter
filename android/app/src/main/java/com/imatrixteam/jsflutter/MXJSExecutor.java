@@ -1,43 +1,48 @@
 package com.imatrixteam.jsflutter;
 
 import com.eclipsesource.v8.V8Object;
+import android.content.Context;
 
-import java.util.List;
+import com.eclipsesource.v8.V8;
+
 
 public class MXJSExecutor {
-    private JsContext jsContext;
-    private JavaScriptThread javaScriptThread;
+    public V8 runtime;
 
-    public MXJSExecutor initWithJSContext(JsContext context) {
-        this.jsContext = context;
-        return this;
-    }
+    public Context context;
 
-    public MXJSExecutor init() {
+    public MXJSExecutor init(Context context) {
         setup();
         return this;
     }
 
     private void setup() {
-
+        runtime = V8.createV8Runtime();
     }
 
-    public void executeScriptAsync(String script, String sourceURl, ExecuteScriptCallback callback) {
-
+    public void executeScriptAsync(String script, ExecuteScriptCallback callback) {
+        runtime.executeScript(script);
+        callback.onComplete();
     }
 
-    public void executeScriptPatj(String path, ExecuteScriptCallback callback) {
+    public void executeScriptPath(String path, ExecuteScriptCallback callback) {
+        String script = FileUtils.getFromAssets(context, path);
+        runtime.executeScript(script);
+        callback.onComplete();
+    }
+
+    public void executeMXJSBlockOnJSThread() {
 
     }
 
     private boolean isValid() {
-        return jsContext != null;
+        return runtime != null;
     }
 
     public void invalidate() {
         if (isValid()) {
-            jsContext = null;
-            javaScriptThread = null;
+            runtime.release();
+
         }
     }
 
@@ -45,9 +50,12 @@ public class MXJSExecutor {
         void onComplete();
     }
 
-
     public void invokeJSValue(V8Object jsValue, String method, Object args, MXJSValueCallback callback){
 
+    }
+
+    interface MXJSExecutorBlock {
+        void execute(MXJSExecutor executor);
     }
 }
 

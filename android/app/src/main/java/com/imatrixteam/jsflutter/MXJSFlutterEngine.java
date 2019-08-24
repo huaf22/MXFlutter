@@ -1,11 +1,29 @@
 package com.imatrixteam.jsflutter;
 
+import android.content.Context;
 import android.os.Build;
 
 public class MXJSFlutterEngine {
 
     private String rootPath;
     private MXJSFlutterApp currentApp;
+
+    private Context mContext;
+
+    private MXJSFlutterEngine INSTANCE;
+
+    private MXJSFlutterEngine(Context context) {
+        this.mContext = context;
+    }
+
+    private MXJSFlutterEngine getINSTANCE(Context context) {
+        if (INSTANCE != null) {
+            synchronized (this) {
+                INSTANCE = new MXJSFlutterEngine(context);
+            }
+        }
+        return INSTANCE;
+    }
 
     public MXJSFlutterEngine initRootPath(String rootPath) {
         this.rootPath = rootPath;
@@ -28,7 +46,7 @@ public class MXJSFlutterEngine {
         setup();
 
         String appRootPath = rootPath + "/" + appName;
-        currentApp.initWithAppName(appName, this, appRootPath);
+        currentApp.initWithAppName(mContext, appName, this, appRootPath);
         currentApp.runAppWithPageName(pageName);
     }
 

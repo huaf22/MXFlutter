@@ -25,10 +25,10 @@ public class MXJSEngine {
         this.jsExecutor = new MXJSExecutor();
 
         //todo setupBasicJSRuntime
-        jsExecutor.executeMXJSBlockOnThread()
+
     }
 
-    static void setupBasicJSRuntime(MXJSEngine mxjsEngine, JSContext context) {
+    static void setupBasicJSRuntime(MXJSEngine mxjsEngine) {
 
     }
 

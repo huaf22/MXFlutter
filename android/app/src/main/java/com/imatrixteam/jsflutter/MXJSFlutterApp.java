@@ -41,7 +41,7 @@ public class MXJSFlutterApp {
 
     }
 
-    private void setUpChannel(BinaryMessenger flutterViewController) {
+    void setUpChannel(BinaryMessenger flutterViewController) {
         final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
         sJsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
         sJsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
@@ -52,11 +52,16 @@ public class MXJSFlutterApp {
                     return;
 
                 if(methodCall.method.equals("callJS")){
-                    app.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", (List) methodCall.arguments, new MXJSValueCallback());
+                    app.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
                 }
             }
         });
     }
+
+    void callFlutterWidgetChannelWithMethodName(String methodName, Object args){
+        sJsFlutterAppChannel.invokeMethod(methodName, args);
+    }
+
 
     public void unsetup() {
 

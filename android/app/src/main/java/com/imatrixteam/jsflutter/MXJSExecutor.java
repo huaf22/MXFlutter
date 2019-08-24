@@ -46,7 +46,7 @@ public class MXJSExecutor {
     }
 
 
-    public void invokeJSValue(V8Object jsValue, String method, List args, MXJSValueCallback callback){
+    public void invokeJSValue(V8Object jsValue, String method, Object args, MXJSValueCallback callback){
 
     }
 }

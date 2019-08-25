@@ -1,5 +1,6 @@
 package com.imatrixteam.jsflutter;
 
+import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
 import android.content.Context;
 
@@ -10,6 +11,21 @@ public class MXJSExecutor {
     public V8 runtime;
 
     public Context context;
+
+    private static MXJSExecutor instance;
+
+    private MXJSExecutor() {
+
+    }
+
+    public static MXJSExecutor getInstance(Context context) {
+        if (instance == null) {
+            synchronized (MXJSExecutor.class) {
+                instance = new MXJSExecutor().init(context);
+            }
+        }
+        return instance;
+    }
 
     public MXJSExecutor init(Context context) {
         setup();
@@ -40,7 +56,6 @@ public class MXJSExecutor {
     public void invalidate() {
         if (isValid()) {
             runtime.release();
-
         }
     }
 
@@ -48,8 +63,11 @@ public class MXJSExecutor {
         void onComplete(Object value);
     }
 
-    public void invokeJSValue(V8Object jsValue, String method, Object args, MXJSValueCallback callback){
-
+    public void invokeJSValue(V8Object jsAppObj, String method, Object args, MXJSValueCallback callback){
+        //获取执行结果
+        if (jsAppObj != null) {
+            jsAppObj.executeJSFunction(method, args);
+        }
     }
 
     interface MXJSExecutorBlock {

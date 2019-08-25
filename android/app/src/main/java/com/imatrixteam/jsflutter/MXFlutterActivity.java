@@ -21,6 +21,8 @@ public class MXFlutterActivity extends FlutterActivity {
   private boolean isFlutterEngineIsDidRender;
   private ArrayList<MethodCall> callFlutterQueue;
 
+  private String jsAppName = "";
+
   //Flutter通道
   private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.flutter_main_channel";
   MethodChannel jsFlutterAppChannel;
@@ -29,6 +31,7 @@ public class MXFlutterActivity extends FlutterActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+    setup();
   }
 
   public void setup(){
@@ -37,6 +40,8 @@ public class MXFlutterActivity extends FlutterActivity {
     for(MethodCall call : callFlutterQueue){
       jsFlutterAppChannel.invokeMethod(call.method,call.arguments);
     }
+    setupChannel();
+    mMXJSFlutterEngine = MXJSFlutterEngine.getInstance(this);
   }
 
   public void setupChannel(){

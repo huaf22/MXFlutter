@@ -10,24 +10,19 @@ public class MXJSFlutterEngine {
 
     private Context mContext;
 
-    private MXJSFlutterEngine INSTANCE;
+    private static MXJSFlutterEngine INSTANCE;
 
     private MXJSFlutterEngine(Context context) {
         this.mContext = context;
     }
 
-    private MXJSFlutterEngine getINSTANCE(Context context) {
-        if (INSTANCE != null) {
-            synchronized (this) {
+    public static MXJSFlutterEngine getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (MXJSFlutterEngine.class) {
                 INSTANCE = new MXJSFlutterEngine(context);
             }
         }
         return INSTANCE;
-    }
-
-    public MXJSFlutterEngine initRootPath(String rootPath) {
-        this.rootPath = rootPath;
-        return this;
     }
 
     public void setup() {
@@ -44,9 +39,8 @@ public class MXJSFlutterEngine {
 
     public void runApp(String appName, String pageName) {
         setup();
-
-        String appRootPath = rootPath + "/" + appName;
-        currentApp.initWithAppName(mContext, appName, this, appRootPath);
+        currentApp = new MXJSFlutterApp().initWithAppName(mContext, appName, this);
+        currentApp.initWithAppName(mContext, appName, this);
         currentApp.runAppWithPageName(pageName);
     }
 

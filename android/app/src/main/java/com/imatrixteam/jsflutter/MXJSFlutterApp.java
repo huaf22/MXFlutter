@@ -28,7 +28,7 @@ public class MXJSFlutterApp {
     private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
     MethodChannel jsFlutterAppChannel;
 
-    public MXJSFlutterApp initWithAppName(Context context, String appName, MXJSFlutterEngine jsFlutterEngine, String appRootPath) {
+    public MXJSFlutterApp initWithAppName(Context context, String appName, MXJSFlutterEngine jsFlutterEngine) {
         this.mContext = context;
         this.appName = appName;
         this.jsFlutterEngine = jsFlutterEngine;
@@ -36,15 +36,15 @@ public class MXJSFlutterApp {
 
         setUpChannel(((MXFlutterActivity)context).getFlutterView());
         setupJSEngine();
-
         return this;
-
     }
 
     private void setupJSEngine() {
 
-        jsEngine = new MXJSEngine(mContext);
+        jsEngine = MXJSEngine.getInstance(mContext);
+        jsExecutor = jsEngine.jsExecutor;
 
+        //todo 调试时，指向本地路径，可以热重载
         String jsBasePath = "";
 
         //JSFlutter JS运行库搜索路径
@@ -65,6 +65,7 @@ public class MXJSFlutterApp {
 
     }
 
+    //flutter --> js
     void setUpChannel(BinaryMessenger flutterViewController) {
         final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
         jsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
@@ -76,14 +77,12 @@ public class MXJSFlutterApp {
                     return;
 
                 if(methodCall.method.equals("callJS")){
-                    app.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
+                    if (jsAppObj != null) {
+                        app.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
+                    }
                 }
             }
         });
-    }
-
-    void callFlutterWidgetChannelWithMethodName(String methodName, Object args){
-        jsFlutterAppChannel.invokeMethod(methodName, args);
     }
 
 
@@ -117,21 +116,22 @@ public class MXJSFlutterApp {
         this.jsEngine = null;
     }
 
-    private MXJSExecutor jsExecutor() {
-        return this.jsEngine.jsExecutor;
-    }
 
+    //js 注入对象
     class MXNativeJSFlutterApp {
+
+        //js --> native
         public void setCurrentJSApp(V8Object jsApp) {
             jsAppObj = jsApp;
         }
 
+        //js --> flutter
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
             jsAppObj = jsApp;
             jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
         }
 
-        //js -> Dart
+        //js --> flutter
         public void callFlutterWidgetChannel(String methodName, V8Array args) {
             jsFlutterAppChannel.invokeMethod(methodName, args);
         }

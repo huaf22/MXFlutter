@@ -18,6 +18,8 @@ import java.util.Set;
 public class MXJSEngine {
     static private String TAG = "MXJSEngine";
 
+    private static MXJSEngine instance;
+
     public MXJSExecutor jsExecutor;
 
     private ArrayList<String> searchDirArray;
@@ -26,11 +28,21 @@ public class MXJSEngine {
 
     private Context mContext;
 
-    public MXJSEngine(Context context) {
+    private MXJSEngine(Context context) {
         mContext = context;
+        init();
     }
 
-    public MXJSEngine init() {
+    static MXJSEngine getInstance(Context context) {
+        if (instance == null) {
+            synchronized (MXJSEngine.class) {
+                instance = new MXJSEngine(context);
+            }
+        }
+        return instance;
+    }
+
+    private MXJSEngine init() {
         this.searchDirArray = new ArrayList<>();
         this.runnedScriptFile = new HashSet<>();
         setup();
@@ -38,13 +50,12 @@ public class MXJSEngine {
     }
 
     private void setup() {
-        this.jsExecutor = new MXJSExecutor();
+        this.jsExecutor = MXJSExecutor.getInstance(mContext);
 
-        //todo setupBasicJSRuntime
-
+        setupBasicJSRuntime();
     }
 
-    void setupBasicJSRuntime(MXJSEngine mxjsEngine) {
+    private void setupBasicJSRuntime() {
         JavaVoidCallback JSAPI_log = new JavaVoidCallback() {
             @Override
             public void invoke(V8Object v8Object, V8Array args) {
@@ -53,7 +64,7 @@ public class MXJSEngine {
                 }
             }
         };
-        mxjsEngine.jsExecutor.runtime.registerJavaMethod(JSAPI_log, "JSAPI_log");
+        jsExecutor.runtime.registerJavaMethod(JSAPI_log, "JSAPI_log");
 
         JavaCallback JSAPI_require = new JavaCallback() {
             @Override
@@ -69,7 +80,7 @@ public class MXJSEngine {
                     String absolutePath = "";
                     String jsScript = "";
 
-                    for (String dir : mxjsEngine.searchDirArray
+                    for (String dir : searchDirArray
                     ) {
                         String absolutePathTemp = dir + "/" + filePath;
                         jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
@@ -91,14 +102,10 @@ public class MXJSEngine {
                 return null;
             }
         };
-        mxjsEngine.jsExecutor.runtime.registerJavaMethod(JSAPI_require, "JSAPI_require");
+        jsExecutor.runtime.registerJavaMethod(JSAPI_require, "JSAPI_require");
     }
 
-    public void callFlutterReloadAppWithJSWidgetData(String widgetData) {
-        ((MXFlutterActivity)mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
-    }
-
-    public void addSearchDir(String dir) {
+    void addSearchDir(String dir) {
         if (TextUtils.isEmpty(dir) || searchDirArray.indexOf(dir) != -1) {
             return;
         }

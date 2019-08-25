@@ -24,6 +24,8 @@ public class MXJSFlutterApp {
     private MXJSEngine jsEngine;
     private MXJSExecutor jsExecutor;
 
+    private MXJSFlutterApp currentApp;
+
     //Flutter通道
     private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
     MethodChannel jsFlutterAppChannel;
@@ -34,8 +36,10 @@ public class MXJSFlutterApp {
         this.jsFlutterEngine = jsFlutterEngine;
         jsFlutterEngineStatic = jsFlutterEngine;
 
-        setUpChannel(((MXFlutterActivity)context).getFlutterView());
         setupJSEngine();
+        setUpChannel(((MXFlutterActivity)context).getFlutterView());
+
+        currentApp = this;
         return this;
     }
 
@@ -67,18 +71,18 @@ public class MXJSFlutterApp {
 
     //flutter --> js
     void setUpChannel(BinaryMessenger flutterViewController) {
-        final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
+//        final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
         jsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
         jsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
-                MXJSFlutterApp app = (MXJSFlutterApp)_weakThis.get();
-                if(app == null)
+                if(currentApp == null)
                     return;
 
                 if(methodCall.method.equals("callJS")){
                     if (jsAppObj != null) {
-                        app.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
+                        //jsAppObj.executeJSFunction("nativeCall", methodCall.arguments);
+                        currentApp.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
                     }
                 }
             }
@@ -96,14 +100,14 @@ public class MXJSFlutterApp {
 
     public void runAppWithPageName(String pageName) {
         MXNativeJSFlutterApp MXNativeJSFlutterApp = new MXNativeJSFlutterApp();
-        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
+        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
                 "setCurrentJSApp", new Class<?>[]{V8Object.class});
-        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp,
+        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp,
                 "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
-        jsExecutor.runtime.registerJavaMethod(MXNativeJSFlutterApp,
-                "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{V8Object.class, V8Array.class});
+        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp,
+                "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class, String.class});
 
-        jsExecutor.executeScriptPath("main.js", new MXJSExecutor.ExecuteScriptCallback() {
+        jsExecutor.executeScriptPath("js_flutter_src/app_test/main.js", new MXJSExecutor.ExecuteScriptCallback() {
             @Override
             public void onComplete(Object value) {
 
@@ -132,7 +136,7 @@ public class MXJSFlutterApp {
         }
 
         //js --> flutter
-        public void callFlutterWidgetChannel(String methodName, V8Array args) {
+        public void callFlutterWidgetChannel(String methodName, String args) {
             jsFlutterAppChannel.invokeMethod(methodName, args);
         }
     }

@@ -39,7 +39,7 @@ public class MXJSFlutterEngine {
 
     public void runApp(String appName, String pageName) {
         setup();
-        currentApp = new MXJSFlutterApp().initWithAppName(mContext, appName, this);
+        currentApp = new MXJSFlutterApp();
         currentApp.initWithAppName(mContext, appName, this);
         currentApp.runAppWithPageName(pageName);
     }

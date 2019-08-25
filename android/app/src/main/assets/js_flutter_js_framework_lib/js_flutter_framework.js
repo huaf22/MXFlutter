@@ -65,7 +65,8 @@ class MXNativeJSFlutterAppProxy {
             return;
         }
 
-        MXNativeJSFlutterApp.callFlutterWidgetChannel(...arguments);
+        //MXNativeJSFlutterApp.callFlutterWidgetChannel(...arguments);
+        MXNativeJSFlutterApp.callFlutterWidgetChannel(method, args);
     }
 
 

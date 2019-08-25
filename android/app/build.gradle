@@ -65,5 +65,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile(name:'j2v8_android-3.0.5', ext:'aar')
+    compile(name:'j2v8-5.0.103', ext:'aar')
 }

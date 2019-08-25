@@ -64,7 +64,7 @@ public class MXJSEngine {
                 }
             }
         };
-        jsExecutor.runtime.registerJavaMethod(JSAPI_log, "JSAPI_log");
+        jsExecutor.registerJavaMethod(JSAPI_log, "JSAPI_log");
 
         JavaCallback JSAPI_require = new JavaCallback() {
             @Override
@@ -82,15 +82,27 @@ public class MXJSEngine {
 
                     for (String dir : searchDirArray
                     ) {
-                        String absolutePathTemp = dir + "/" + filePath;
-                        jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
-                        if (TextUtils.isEmpty(jsScript)) {
-                            absolutePath = absolutePathTemp;
-                            break;
+                        try {
+                            String[] files = mContext.getAssets().list(dir);
+                            for (String fileName: files
+                                 ) {
+                                if (fileName.equals(filePath)){
+                                    String absolutePathTemp = dir + "/" + filePath;
+                                    jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
+                                    if (TextUtils.isEmpty(jsScript)) {
+                                        absolutePath = absolutePathTemp;
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                     }
 
-                    String injectScript = String.format("(function (){let module = {exports:{}};(function (){\\n%s\\n})(); return module.exports;})();", jsScript);
+                    String injectScript = String.format("(function (){let module = {exports:{}};(function (){%s})(); return module.exports;})();", jsScript);
                     Object value = jsExecutor.runtime.executeScript(injectScript);
                     if (value != null) {
                         Map<String, Object> module = new HashMap<>();
@@ -102,7 +114,7 @@ public class MXJSEngine {
                 return null;
             }
         };
-        jsExecutor.runtime.registerJavaMethod(JSAPI_require, "JSAPI_require");
+        jsExecutor.registerJavaMethod(JSAPI_require, "JSAPI_require");
     }
 
     void addSearchDir(String dir) {

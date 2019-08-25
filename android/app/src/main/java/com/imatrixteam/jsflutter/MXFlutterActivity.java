@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.flutter.app.FlutterActivity;
@@ -30,8 +31,8 @@ public class MXFlutterActivity extends FlutterActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    GeneratedPluginRegistrant.registerWith(this);
     setup();
+    GeneratedPluginRegistrant.registerWith(this);
   }
 
   public void setup(){
@@ -40,31 +41,27 @@ public class MXFlutterActivity extends FlutterActivity {
     for(MethodCall call : callFlutterQueue){
       jsFlutterAppChannel.invokeMethod(call.method,call.arguments);
     }
-    setupChannel();
+    MXJSEngine.getInstance(this);
     mMXJSFlutterEngine = MXJSFlutterEngine.getInstance(this);
+    setupChannel();
   }
 
   public void setupChannel(){
-    final WeakReference _weakThis = new WeakReference(MXFlutterActivity.this);
     jsFlutterAppChannel = new MethodChannel(this.getFlutterView(),FLUTTER_METHED_CHANNEL_NAME);
     jsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
       @Override
       public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
-        MXFlutterActivity activity = (MXFlutterActivity)_weakThis.get();
-        if(activity == null)
-          return;
-
         if(methodCall.method.equals("callNativeRunJSApp")){
-          activity.callNativeRunJSApp(methodCall.arguments);
+          String jsAppName = methodCall.<String>argument("jsAppName");
+          String pageName = methodCall.<String>argument("pageName");
+          callNativeRunJSApp(jsAppName, pageName);
+          result.success("success");
         }
       }
     });
   }
 
-  private void callNativeRunJSApp(Object args){
-    Map argsMap = (Map)args;
-    String jsAppName = (String) argsMap.get("jsAppName");
-    String pageName = (String) argsMap.get("pageName");
+  private void callNativeRunJSApp(String jsAppName, String pageName){
     mMXJSFlutterEngine.runApp(jsAppName, pageName);
   }
 

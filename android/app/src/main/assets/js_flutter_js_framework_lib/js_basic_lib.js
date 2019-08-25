@@ -3,14 +3,14 @@
 var MXJSFlutterJSBasicLib = {
     _loadedMoudleCache: {},
     _loadedMoudleCahceWithAbsolutePath: {},
-    require(file) {
+    require: function(file) {
 
-        let prefix = "./";
+        var prefix = "./";
         if(file.indexOf(prefix) == 0){
             file = file.slice(prefix.length);
         }
 
-        let fileExports = this._loadedMoudleCache[file];
+        var fileExports = this._loadedMoudleCache[file];
 
         if (fileExports != null) {
             return fileExports;

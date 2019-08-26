@@ -10,7 +10,7 @@ let jsFlutterRequire = typeof mxRequire != "undefined" ? mxRequire : require;
 
 let {
     DartClass,
-    FlutterWidget,
+    FlutterWidget
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 
@@ -18,7 +18,7 @@ class AssetImage extends FlutterWidget {
     constructor({
         assetName,
         bundle,
-        packageJS,
+        packageJS
     } = {}) {
         super();
 
@@ -33,7 +33,7 @@ class ExactAssetImage extends FlutterWidget {
         assetName,
         scale,
         bundle,
-        packageJS,
+        packageJS
     } = {}) {
         super();
 
@@ -47,7 +47,7 @@ class ExactAssetImage extends FlutterWidget {
 class FileImage extends FlutterWidget {
     constructor({
         file,
-        scale,
+        scale
     } = {}) {
         super();
 
@@ -59,7 +59,7 @@ class FileImage extends FlutterWidget {
 class MemoryImage extends FlutterWidget {
     constructor({
         bytes,
-        scale,
+        scale
     } = {}) {
         super();
 
@@ -72,7 +72,7 @@ class NetworkImage extends FlutterWidget {
     constructor (
         url,
 {			scale,
-        headers,
+        headers
     } = {}) {
         super();
 
@@ -98,7 +98,7 @@ class Image extends FlutterWidget {
         centerSlice,
         matchTextDirection,
         gaplessPlayback,
-        filterQuality,
+        filterQuality
     } = {}) {
         super();
 
@@ -178,7 +178,7 @@ class Image extends FlutterWidget {
             centerSlice,
             matchTextDirection,
             gaplessPlayback,
-            filterQuality,
+            filterQuality
         } = {}) {
         let jsObj = new Image();
         jsObj.constructorName = "file";
@@ -220,7 +220,7 @@ class Image extends FlutterWidget {
             matchTextDirection,
             gaplessPlayback,
             packageJS,
-            filterQuality,
+            filterQuality
         } = {}) {
         let jsObj = new Image();
         jsObj.constructorName = "asset";
@@ -262,7 +262,7 @@ class Image extends FlutterWidget {
             centerSlice,
             matchTextDirection,
             gaplessPlayback,
-            filterQuality,
+            filterQuality
         } = {}) {
         let jsObj = new Image();
         jsObj.constructorName = "memory";
@@ -303,7 +303,7 @@ class DecorationImage extends FlutterWidget {
         alignment,
         centerSlice,
         repeat,
-        matchTextDirection,
+        matchTextDirection
     } = {}) {
         super();
 
@@ -327,5 +327,5 @@ module.exports = {
     NetworkImage,
     Image,
     ImageRepeat,
-    DecorationImage,
+    DecorationImage
 };

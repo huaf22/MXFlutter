@@ -10,7 +10,7 @@ let jsFlutterRequire = typeof mxRequire != "undefined" ? mxRequire : require;
 
 let {
     DartClass,
-    FlutterWidget,
+    FlutterWidget
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 class Center extends FlutterWidget {
@@ -18,7 +18,7 @@ class Center extends FlutterWidget {
         key,
         widthFactor,
         heightFactor,
-        child,
+        child
     } = {}) {
         super("Center");
 
@@ -42,7 +42,7 @@ class Container extends FlutterWidget {
         constraints,
         margin,
         transform,
-        child,
+        child
     } = {}) {
         super("Container");
 
@@ -65,7 +65,7 @@ class Padding extends DartClass {
     constructor({
         key,
         padding,
-        child,
+        child
     } = {}) {
         super();
 
@@ -81,7 +81,7 @@ class Align extends FlutterWidget {
         alignment,
         widthFactor,
         heightFactor,
-        child,
+        child
     } = {}) {
         super();
 
@@ -99,7 +99,7 @@ class FittedBox extends FlutterWidget {
         key,
         fit,
         alignment,
-        child,
+        child
     } = {}) {
         super();
 
@@ -114,7 +114,7 @@ class AspectRatio extends FlutterWidget {
     constructor({
         key,
         aspectRatio,
-        child,
+        child
     } = {}) {
         super();
 
@@ -128,7 +128,7 @@ class ConstrainedBox extends FlutterWidget {
     constructor({
         key,
         constraints,
-        child,
+        child
     } = {}) {
         super();
 
@@ -143,7 +143,7 @@ class Baseline extends FlutterWidget {
         key,
         baseline,
         baselineType,
-        child,
+        child
     } = {}) {
         super();
 
@@ -160,7 +160,7 @@ class FractionallySizedBox extends FlutterWidget {
         alignment,
         widthFactor,
         heightFactor,
-        child,
+        child
     } = {}) {
         super();
 
@@ -175,7 +175,7 @@ class FractionallySizedBox extends FlutterWidget {
 class IntrinsicHeight extends FlutterWidget {
     constructor({
         key,
-        child,
+        child
     } = {}) {
         super();
 
@@ -189,7 +189,7 @@ class IntrinsicWidth extends FlutterWidget {
         key,
         stepWidth,
         stepHeight,
-        child,
+        child
     } = {}) {
         super();
 
@@ -205,7 +205,7 @@ class LimitedBox extends FlutterWidget {
         key,
         maxWidth,
         maxHeight,
-        child,
+        child
     } = {}) {
         super();
 
@@ -220,7 +220,7 @@ class Offstage extends FlutterWidget {
     constructor({
         key,
         offstage,
-        child,
+        child
     } = {}) {
         super();
 
@@ -238,7 +238,7 @@ class OverflowBox extends FlutterWidget {
         maxWidth,
         minHeight,
         maxHeight,
-        child,
+        child
     } = {}) {
         super();
 
@@ -258,7 +258,7 @@ class SizedBox extends FlutterWidget {
         key,
         width,
         height,
-        child,
+        child
     } = {}) {
         super();
 
@@ -275,7 +275,7 @@ class SizedOverflowBox extends FlutterWidget {
         key,
         size,
         alignment,
-        child,
+        child
     } = {}) {
         super();
 
@@ -294,7 +294,7 @@ class Transform extends FlutterWidget {
         origin,
         alignment,
         transformHitTests,
-        child,
+        child
     } = {}) {
         super();
 
@@ -311,7 +311,7 @@ class CustomSingleChildLayout extends FlutterWidget {
     constructor({
         key,
         delegate,
-        child,
+        child
     } = {}) {
         super();
 
@@ -330,7 +330,7 @@ class Row extends FlutterWidget {
         textDirection,
         verticalDirection,
         textBaseline,
-        children,
+        children
     } = {}) {
         super();
 
@@ -354,7 +354,7 @@ class Column extends FlutterWidget {
         textDirection,
         verticalDirection,
         textBaseline,
-        children,
+        children
     } = {}) {
         super();
 
@@ -376,7 +376,7 @@ class Stack extends FlutterWidget {
         textDirection,
         fit,
         overflow,
-        children,
+        children
     } = {}) {
         super();
 
@@ -396,7 +396,7 @@ class IndexedStack extends FlutterWidget {
         textDirection,
         sizing,
         index,
-        children,
+        children
     } = {}) {
         super();
 
@@ -413,7 +413,7 @@ class Flow extends FlutterWidget {
     constructor({
         key,
         delegate,
-        children,
+        children
     } = {}) {
         super();
 
@@ -432,7 +432,7 @@ class Table extends FlutterWidget {
         textDirection,
         border,
         defaultVerticalAlignment,
-        textBaseline,
+        textBaseline
     } = {}) {
         super();
 
@@ -458,7 +458,7 @@ class Wrap extends FlutterWidget {
         crossAxisAlignment,
         textDirection,
         verticalDirection,
-        children,
+        children
     } = {}) {
         super();
 
@@ -480,7 +480,7 @@ class ListBody extends FlutterWidget {
         key,
         mainAxis,
         reverse,
-        children,
+        children
     } = {}) {
         super();
 
@@ -495,7 +495,7 @@ class CustomMultiChildLayout extends FlutterWidget {
     constructor({
         key,
         delegate,
-        children,
+        children
     } = {}) {
         super();
 
@@ -521,7 +521,7 @@ class ListView extends FlutterWidget {
         addSemanticIndexes,
         cacheExtent,
         children,
-        semanticChildCount,
+        semanticChildCount
     } = {}) {
         super();
 
@@ -556,7 +556,7 @@ class ListTile extends FlutterWidget {
         enabled,
         onTap,
         onLongPress,
-        selected,
+        selected
     } = {}) {
         super();
 
@@ -579,7 +579,7 @@ class ListTile extends FlutterWidget {
 class LayoutBuilder extends FlutterWidget {
     constructor({
         key,
-        builder,
+        builder
     } = {}) {
         super();
 
@@ -602,7 +602,7 @@ class CustomScrollView extends FlutterWidget {
         cacheExtent,
         slivers,
         semanticChildCount,
-        dragStartBehavior,
+        dragStartBehavior
     } = {}) {
         super();
 
@@ -643,7 +643,7 @@ class SliverAppBar extends FlutterWidget {
         expandedHeight,
         floating,
         pinned,
-        snap,
+        snap
     } = {}) {
         super();
 
@@ -675,7 +675,7 @@ class SliverPadding extends FlutterWidget {
     constructor({
         key,
         padding,
-        sliver,
+        sliver
     } = {}) {
         super();
 
@@ -689,7 +689,7 @@ class SliverGrid extends FlutterWidget {
     constructor({
         key,
         delegate,
-        gridDelegate,
+        gridDelegate
     } = {}) {
         super();
 
@@ -704,7 +704,7 @@ class SliverGridDelegateWithMaxCrossAxisExtent extends FlutterWidget {
         maxCrossAxisExtent,
         mainAxisSpacing,
         crossAxisSpacing,
-        childAspectRatio,
+        childAspectRatio
     } = {}) {
         super();
 
@@ -745,7 +745,7 @@ class GestureDetector extends FlutterWidget {
         onScaleUpdate,
         onScaleEnd,
         behavior,
-        excludeFromSemantics,
+        excludeFromSemantics
     } = {}) {
         super();
 
@@ -787,7 +787,7 @@ class Expanded extends FlutterWidget {
     constructor({
         key,
         flex,
-        child,
+        child
     } = {}) {
         super();
 
@@ -802,7 +802,7 @@ class DecoratedBox extends FlutterWidget {
         key,
         decoration,
         position,
-        child,
+        child
     } = {}) {
         super();
 
@@ -816,7 +816,7 @@ class DecoratedBox extends FlutterWidget {
 class SliverList extends FlutterWidget {
     constructor ({
         key,
-        delegate,
+        delegate
     } = {}) {
         super();
 
@@ -828,17 +828,17 @@ class SliverList extends FlutterWidget {
 HitTestBehavior = {
     deferToChild: "HitTestBehavior.deferToChild",
     opaque: "HitTestBehavior.opaque",
-    translucent: "HitTestBehavior.translucent",
+    translucent: "HitTestBehavior.translucent"
 };
 
 DragStartBehavior = {
     down: "DragStartBehavior.down",
-    start: "DragStartBehavior.start",
+    start: "DragStartBehavior.start"
 };
 
 DecorationPosition = {
     background: "DecorationPosition.background",
-    foreground: "DecorationPosition.foreground",
+    foreground: "DecorationPosition.foreground"
 };
 
 
@@ -846,7 +846,7 @@ class SliverOverlapInjector extends FlutterWidget {
     constructor ({
         key,
         handle,
-        child,
+        child
     } = {}) {
         super();
 
@@ -860,7 +860,7 @@ class SliverFixedExtentList extends FlutterWidget {
     constructor ({
         key,
         delegate,
-        itemExtent,
+        itemExtent
     } = {}) {
         super();
 
@@ -879,7 +879,7 @@ class NestedScrollView extends FlutterWidget {
         physics,
         headerSliverBuilder,
         body,
-        dragStartBehavior,
+        dragStartBehavior
     } = {}) {
         super();
 
@@ -919,7 +919,7 @@ class SliverOverlapAbsorber extends FlutterWidget {
     constructor ({
         key,
         handle,
-        child,
+        child
     } = {}) {
         super();
 
@@ -940,7 +940,7 @@ class SingleChildScrollView extends FlutterWidget {
         physics,
         controller,
         child,
-        dragStartBehavior,
+        dragStartBehavior
     } = {}) {
         super();
 
@@ -1004,5 +1004,5 @@ module.exports = {
     SliverFixedExtentList,
     NestedScrollView,
     SliverOverlapAbsorber,
-    SingleChildScrollView,
+    SingleChildScrollView
 };

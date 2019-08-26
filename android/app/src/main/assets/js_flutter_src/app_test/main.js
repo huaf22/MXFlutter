@@ -23,13 +23,14 @@ function jsFlutterRequire(file) {
 var {
     MXJSLog,
     runApp,
-    MXJSFlutterApp,
+    MXJSFlutterApp
 } = jsFlutterRequire("js_flutter_framework.js");
 
 var {
-    JSWidgetHomePage,
+    JSWidgetHomePage
 } = jsFlutterRequire("./home_page.js");
 
+var currentJSApp = null
 
 
 class AppTest extends MXJSFlutterApp {
@@ -41,7 +42,9 @@ class AppTest extends MXJSFlutterApp {
     //flutter->js 用于路由跳转
     //return MXJSWidget subclass
     createJSWidgetWithName(pageName) {
-        let w = new JSWidgetHomePage;
+        MXJSLog.log("[JS]createJSWidgetWithName:"+JSWidgetHomePage)
+        let w = new JSWidgetHomePage();
+        MXJSLog.log("11111",w)
         return w;
     }
 }
@@ -51,7 +54,7 @@ function main(pageName) {
 
     MXJSLog.log("main:pageName" + pageName);
 
-    let app = new AppTest;
+    let app = new AppTest();
     runApp(app);
 
     //先不要显示页面,等待dart调用，显示对应js页面

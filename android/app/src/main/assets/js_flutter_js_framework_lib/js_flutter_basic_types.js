@@ -53,7 +53,7 @@ class FlutterCallArgs{
         mirrorID,
         className,
         funcName,
-        args,
+        args
     } = {}) {
         this.mirrorID = mirrorID;
         this.className = className;
@@ -114,7 +114,7 @@ class Key extends DartClass {
 class AlignmentDirectional extends DartClass {
     constructor({
         start,
-        y,
+        y
     } = {}) {
         super();
 
@@ -128,7 +128,7 @@ class EdgeInsetsDirectional extends DartClass {
         start,
         top,
         end,
-        bottom,
+        bottom
     ) {
         super();
 
@@ -142,7 +142,7 @@ class EdgeInsetsDirectional extends DartClass {
         start,
         top,
         end,
-        bottom,
+        bottom
     } = {}) {
 
         let v = new EdgeInsetsDirectional();
@@ -159,7 +159,7 @@ class EdgeInsetsDirectional extends DartClass {
         start = 0.0,
         top = 0.0,
         end = 0.0,
-        bottom = 0.0,
+        bottom = 0.0
     } = {}) {
         let v = new EdgeInsetsDirectional();
         v.constructorName = "only";
@@ -176,7 +176,7 @@ class EdgeInsets extends DartClass {
         left,
         top,
         right,
-        bottom,
+        bottom
     ) {
         super();
 
@@ -191,7 +191,7 @@ class EdgeInsets extends DartClass {
         left,
         top,
         right,
-        bottom,
+        bottom
     ) {
         let jsObj = new EdgeInsets();
         jsObj.constructorName = "fromLTRB";
@@ -204,7 +204,7 @@ class EdgeInsets extends DartClass {
         return jsObj;
     }
     static all(
-        value,
+        value
     ) {
         let jsObj = new EdgeInsets();
         jsObj.constructorName = "all";
@@ -217,7 +217,7 @@ class EdgeInsets extends DartClass {
         left,
         top,
         right,
-        bottom,
+        bottom
     } = {}) {
         let jsObj = new EdgeInsets();
         jsObj.constructorName = "only";
@@ -231,7 +231,7 @@ class EdgeInsets extends DartClass {
     }
     static symmetric({
         vertical,
-        horizontal,
+        horizontal
     } = {}) {
         let jsObj = new EdgeInsets();
         jsObj.constructorName = "symmetric";
@@ -354,27 +354,27 @@ BlendMode = {
     hue: "BlendMode.hue",
     saturation: "BlendMode.saturation",
     color: "BlendMode.color",
-    luminosity: "BlendMode.luminosity",
+    luminosity: "BlendMode.luminosity"
 };
 
 FilterQuality = {
     none: "FilterQuality.none",
     low: "FilterQuality.low",
     medium: "FilterQuality.medium",
-    high: "FilterQuality.high",
+    high: "FilterQuality.high"
 };
 
 BlurStyle = {
     normal: "BlurStyle.normal",
     solid: "BlurStyle.solid",
     outer: "BlurStyle.outer",
-    inner: "BlurStyle.inner",
+    inner: "BlurStyle.inner"
 };
 
 class Alignment extends DartClass {
     constructor(
         x,
-        y,
+        y
     ) {
         super();
 
@@ -417,18 +417,18 @@ Alignment.bottomRight = new Alignment(1.0, 1.0);
 StrokeCap = {
     butt: "StrokeCap.butt",
     round: "StrokeCap.round",
-    square: "StrokeCap.square",
+    square: "StrokeCap.square"
 };
 
 StrokeJoin = {
     miter: "StrokeJoin.miter",
     round: "StrokeJoin.round",
-    bevel: "StrokeJoin.bevel",
+    bevel: "StrokeJoin.bevel"
 };
 
 PaintingStyle = {
     fill: "PaintingStyle.fill",
-    stroke: "PaintingStyle.stroke",
+    stroke: "PaintingStyle.stroke"
 };
 
 class Paint {
@@ -462,7 +462,7 @@ class ColorFilter extends DartClass {
 class MaskFilter extends DartClass {
     constructor(
         style,
-        sigma,
+        sigma
     ) {
         super();
 
@@ -472,7 +472,7 @@ class MaskFilter extends DartClass {
 
     static blur(
         style,
-        sigma,
+        sigma
     ) {
         let v = new MaskFilter(style, sigma);
         v.constructorName = "blur";
@@ -483,7 +483,7 @@ class MaskFilter extends DartClass {
 TileMode = {
     clamp: "TileMode.clamp",
     repeated: "TileMode.repeated",
-    mirror: "TileMode.mirror",
+    mirror: "TileMode.mirror"
 };
 
 class LinearGradient extends DartClass {
@@ -492,7 +492,7 @@ class LinearGradient extends DartClass {
         end,
         colors,
         stops,
-        tileMode,
+        tileMode
     } = {}) {
         super();
 
@@ -512,7 +512,7 @@ class RadialGradient extends DartClass {
         stops,
         tileMode,
         focal,
-        focalRadius,
+        focalRadius
     } = {}) {
         super();
 
@@ -533,7 +533,7 @@ class SweepGradient extends DartClass {
         endAngle,
         colors,
         stops,
-        tileMode,
+        tileMode
     } = {}) {
         super();
 
@@ -551,7 +551,7 @@ class ImageShader extends DartClass {
         image,
         tmx,
         tmy,
-        matrix4,
+        matrix4
     } = {}) {
         super();
 
@@ -571,7 +571,7 @@ class BoxDecoration extends DartClass {
         boxShadow,
         gradient,
         backgroundBlendMode,
-        shape,
+        shape
     } = {}) {
         super();
 
@@ -589,7 +589,7 @@ class BoxDecoration extends DartClass {
 class Locale extends DartClass {
     constructor(
         languageCode,
-        countryCode,
+        countryCode
     ) {
         super();
 
@@ -617,12 +617,12 @@ MainAxisAlignment = {
     center: "MainAxisAlignment.center",
     spaceBetween: "MainAxisAlignment.spaceBetween",
     spaceAround: "MainAxisAlignment.spaceAround",
-    spaceEvenly: "MainAxisAlignment.spaceEvenly",
+    spaceEvenly: "MainAxisAlignment.spaceEvenly"
 };
 
 MainAxisSize = {
     min: "MainAxisSize.min",
-    max: "MainAxisSize.max",
+    max: "MainAxisSize.max"
 };
 
 CrossAxisAlignment = {
@@ -630,12 +630,12 @@ CrossAxisAlignment = {
     end: "CrossAxisAlignment.end",
     center: "CrossAxisAlignment.center",
     stretch: "CrossAxisAlignment.stretch",
-    baseline: "CrossAxisAlignment.baseline",
+    baseline: "CrossAxisAlignment.baseline"
 };
 
 VerticalDirection = {
     up: "VerticalDirection.up",
-    down: "VerticalDirection.down",
+    down: "VerticalDirection.down"
 };
 
 class BoxConstraints extends DartClass {
@@ -643,7 +643,7 @@ class BoxConstraints extends DartClass {
         minWidth,
         maxWidth,
         minHeight,
-        maxHeight,
+        maxHeight
     } = {}) {
         super();
 
@@ -657,7 +657,7 @@ class BoxConstraints extends DartClass {
 class Size extends DartClass {
     constructor(
         width,
-        height,
+        height
     ) {
         super();
 
@@ -687,7 +687,7 @@ class Size extends DartClass {
 class Offset extends DartClass {
     constructor(
         dx,
-        dy, ) {
+        dy ) {
         super();
 
         this.dx = dx;
@@ -699,7 +699,7 @@ class TableRow extends DartClass {
     constructor({
         key,
         decoration,
-        children,
+        children
     } = {}) {
         super();
 
@@ -716,23 +716,23 @@ BoxFit = {
     fitWidth: "BoxFit.fitWidth",
     fitHeight: "BoxFit.fitHeight",
     none: "BoxFit.none",
-    scaleDown: "BoxFit.scaleDown",
+    scaleDown: "BoxFit.scaleDown"
 };
 
 Overflow = {
     visible: "Overflow.visible",
-    clip: "Overflow.clip",
+    clip: "Overflow.clip"
 };
 
 StackFit = {
     loose: "StackFit.loose",
     expand: "StackFit.expand",
-    passthrough: "StackFit.passthrough",
+    passthrough: "StackFit.passthrough"
 };
 
 Axis = {
     horizontal: "Axis.horizontal",
-    vertical: "Axis.vertical",
+    vertical: "Axis.vertical"
 };
 
 
@@ -741,7 +741,7 @@ TableCellVerticalAlignment = {
     middle: "TableCellVerticalAlignment.middle",
     bottom: "TableCellVerticalAlignment.bottom",
     baseline: "TableCellVerticalAlignment.baseline",
-    fill: "TableCellVerticalAlignment.fill",
+    fill: "TableCellVerticalAlignment.fill"
 };
 
 class TableBorder extends DartClass {
@@ -751,7 +751,7 @@ class TableBorder extends DartClass {
         bottom,
         left,
         horizontalInside,
-        verticalInside,
+        verticalInside
     } = {}) {
         super();
 
@@ -768,7 +768,7 @@ class BorderSide extends DartClass {
     constructor({
         color,
         width,
-        style,
+        style
     } = {}) {
         super();
 
@@ -798,14 +798,14 @@ WrapAlignment = {
     center: "WrapAlignment.center",
     spaceBetween: "WrapAlignment.spaceBetween",
     spaceAround: "WrapAlignment.spaceAround",
-    spaceEvenly: "WrapAlignment.spaceEvenly",
+    spaceEvenly: "WrapAlignment.spaceEvenly"
 };
 
 
 WrapCrossAlignment = {
     start: "WrapCrossAlignment.start",
     end: "WrapCrossAlignment.end",
-    center: "WrapCrossAlignment.center",
+    center: "WrapCrossAlignment.center"
 
 };
 
@@ -826,7 +826,7 @@ class Matrix4 extends DartClass {
         arg12,
         arg13,
         arg14,
-        arg15,
+        arg15
     } = {}) {
         super();
 
@@ -876,7 +876,7 @@ class Matrix4 extends DartClass {
         arg0,
         arg1,
         arg2,
-        arg3,
+        arg3
     ) {
         let v = new Matrix4();
         v.constructorName = "columns";
@@ -892,7 +892,7 @@ class Matrix4 extends DartClass {
     /// Outer product of [u] and [v].
     static outer(
         u,
-        v,
+        v
     ) {
         let jsObj = new Matrix4();
         jsObj.constructorName = "outer";
@@ -904,7 +904,7 @@ class Matrix4 extends DartClass {
     }
 
     static rotationX(
-        radians,
+        radians
     ) {
         let v = new Matrix4();
         v.constructorName = "rotationX";
@@ -914,7 +914,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static rotationY(
-        radians,
+        radians
     ) {
         let v = new Matrix4();
         v.constructorName = "rotationY";
@@ -923,7 +923,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static rotationZ(
-        radians,
+        radians
     ) {
         let v = new Matrix4();
         v.constructorName = "rotationZ";
@@ -933,7 +933,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static translation(
-        translation,
+        translation
     ) {
         let v = new Matrix4();
         v.constructorName = "translation";
@@ -945,7 +945,7 @@ class Matrix4 extends DartClass {
     static translationValues(
         x,
         y,
-        z,
+        z
     ) {
         let v = new Matrix4();
         v.constructorName = "translationValues";
@@ -957,7 +957,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static diagonal3(
-        scale,
+        scale
     ) {
         let v = new Matrix4();
         v.constructorName = "diagonal3";
@@ -969,7 +969,7 @@ class Matrix4 extends DartClass {
     static diagonal3Values(
         x,
         y,
-        z,
+        z
     ) {
         let v = new Matrix4();
         v.constructorName = "diagonal3Values";
@@ -981,7 +981,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static skewX(
-        alpha,
+        alpha
     ) {
         let v = new Matrix4();
         v.constructorName = "skewX";
@@ -991,7 +991,7 @@ class Matrix4 extends DartClass {
         return v;
     }
     static skewY(
-        beta,
+        beta
     ) {
         let v = new Matrix4();
         v.constructorName = "skewY";
@@ -1001,7 +1001,7 @@ class Matrix4 extends DartClass {
     }
     static skew(
         alpha,
-        beta,
+        beta
     ) {
         let v = new Matrix4();
         v.constructorName = "skew";
@@ -1014,7 +1014,7 @@ class Matrix4 extends DartClass {
     static compose(
         translation,
         rotation,
-        scale,
+        scale
     ) {
         let v = new Matrix4();
         v.constructorName = "compose";
@@ -1033,7 +1033,7 @@ class Vector4 extends DartClass {
         x,
         y,
         z,
-        w,
+        w
     ) {
         super();
 
@@ -1045,7 +1045,7 @@ class Vector4 extends DartClass {
 
     static array(
         array,
-        offset,
+        offset
     ) {
         let v = new Vector4();
         v.constructorName = "array";
@@ -1063,7 +1063,7 @@ class Vector4 extends DartClass {
     }
 
     static random(
-        rng,
+        rng
     ) {
         let v = new Vector4();
         v.constructorName = "random";
@@ -1079,7 +1079,7 @@ class Vector3 extends DartClass {
     constructor(
         x,
         y,
-        z,
+        z
     ) {
         super();
 
@@ -1100,7 +1100,7 @@ class Vector3 extends DartClass {
 
     }
     static all(
-        value,
+        value
     ) {
         let v = new Vector3();
         v.constructorName = "all";
@@ -1110,7 +1110,7 @@ class Vector3 extends DartClass {
         return v;
     }
     static random(
-        rng,
+        rng
     ) {
         let v = new Vector3();
         v.constructorName = "random";
@@ -1125,7 +1125,7 @@ class ScrollController extends DartClass {
     constructor({
         initialScrollOffset,
         keepScrollOffset,
-        debugLabel,
+        debugLabel
     } = {}) {
         super();
 
@@ -1137,7 +1137,7 @@ class ScrollController extends DartClass {
 
 class ScrollPhysics extends DartClass {
     constructor({
-        parent,
+        parent
     } = {}) {
         super();
 
@@ -1147,7 +1147,7 @@ class ScrollPhysics extends DartClass {
 
 class ClampingScrollPhysics extends DartClass {
     constructor({
-        parent,
+        parent
     } = {}) {
         super();
 
@@ -1157,7 +1157,7 @@ class ClampingScrollPhysics extends DartClass {
 
 class AlwaysScrollableScrollPhysics extends DartClass {
     constructor({
-        parent,
+        parent
     } = {}) {
         super();
 
@@ -1167,7 +1167,7 @@ class AlwaysScrollableScrollPhysics extends DartClass {
 
 class NeverScrollableScrollPhysics extends DartClass {
     constructor({
-        parent,
+        parent
     } = {}) {
         super();
 
@@ -1184,7 +1184,7 @@ class SliverChildBuilderDelegate extends FlutterWidget {
             addRepaintBoundaries,
             addSemanticIndexes,
             semanticIndexCallback,
-            semanticIndexOffset,
+            semanticIndexOffset
         }
     ) {
         super();
@@ -1222,7 +1222,7 @@ class SliverChildListDelegate extends DartClass {
         addRepaintBoundaries,
         addSemanticIndexes,
         semanticIndexCallback,
-        semanticIndexOffset,
+        semanticIndexOffset
     ) {
         super();
 
@@ -1239,7 +1239,7 @@ Clip = {
     none: "Clip.none",
     hardEdge: "Clip.hardEdge",
     antiAlias: "Clip.antiAlias",
-    antiAliasWithSaveLayer: "Clip.antiAliasWithSaveLayer",
+    antiAliasWithSaveLayer: "Clip.antiAliasWithSaveLayer"
 };
 
 class Rect extends DartClass {
@@ -1256,7 +1256,7 @@ class Rect extends DartClass {
         left,
         top,
         right,
-        bottom,
+        bottom
     ) {
         let v = new Rect();
         v.constructorName = "fromLTRB";
@@ -1272,7 +1272,7 @@ class Rect extends DartClass {
         left,
         top,
         width,
-        height,
+        height
     ) {
         let v = new Rect();
         v.constructorName = "fromLTWH";
@@ -1286,7 +1286,7 @@ class Rect extends DartClass {
     }
     static fromCircle({
         center,
-        radius,
+        radius
     } = {}) {
         let v = new Rect();
         v.constructorName = "fromCircle";
@@ -1298,7 +1298,7 @@ class Rect extends DartClass {
     }
     static fromPoints(
         a,
-        b,
+        b
     ) {
         let v = new Rect();
         v.constructorName = "fromPoints";
@@ -1322,7 +1322,7 @@ class PlatformAssetBundle extends DartClass {
 
 class NetworkAssetBundle extends DartClass {
     constructor(
-        baseUrl,
+        baseUrl
     ) {
         super();
 
@@ -1332,7 +1332,7 @@ class NetworkAssetBundle extends DartClass {
 
 class File extends DartClass {
     constructor(
-        path,
+        path
     ) {
         super();
 
@@ -1341,7 +1341,7 @@ class File extends DartClass {
 
 
     static fromUri(
-        uri,
+        uri
     ) {
         let v = new File();
         v.constructorName = "fromUri";
@@ -1352,7 +1352,7 @@ class File extends DartClass {
     }
     static fromRawPath(
         Uint8List,
-        rawPath,
+        rawPath
     ) {
         let v = new File();
         v.constructorName = "fromRawPath";
@@ -1366,7 +1366,7 @@ class File extends DartClass {
 
 class Uint8List extends DartClass {
     constructor(
-        length,
+        length
     ) {
         super();
 
@@ -1375,7 +1375,7 @@ class Uint8List extends DartClass {
 
 
     static fromList(
-        elements,
+        elements
     ) {
         let v = new Uint8List();
         v.constructorName = "fromList";
@@ -1411,7 +1411,7 @@ class Radius extends DartClass {
 
 
     static circular(
-        radius,
+        radius
     ) {
         let v = new Radius();
         v.constructorName = "circular";
@@ -1422,7 +1422,7 @@ class Radius extends DartClass {
     }
     static elliptical(
         x,
-        y,
+        y
     ) {
         let v = new Radius();
         v.constructorName = "elliptical";
@@ -1446,7 +1446,7 @@ class BorderRadius extends DartClass {
 
 
     static all(
-        radius,
+        radius
     ) {
         let v = new BorderRadius();
         v.constructorName = "all";
@@ -1456,7 +1456,7 @@ class BorderRadius extends DartClass {
         return v;
     }
     static circular(
-        radius,
+        radius
     ) {
         let v = new BorderRadius();
         v.constructorName = "circular";
@@ -1467,7 +1467,7 @@ class BorderRadius extends DartClass {
     }
     static vertical({
         top,
-        bottom,
+        bottom
     } = {}) {
         let v = new BorderRadius();
         v.constructorName = "vertical";
@@ -1480,7 +1480,7 @@ class BorderRadius extends DartClass {
 
     static horizontal({
         left,
-        right,
+        right
     } = {}) {
         let v = new BorderRadius();
         v.constructorName = "horizontal";
@@ -1494,7 +1494,7 @@ class BorderRadius extends DartClass {
         topLeft,
         topRight,
         bottomLeft,
-        bottomRight,
+        bottomRight
     } = {}) {
         let v = new BorderRadius();
         v.constructorName = "only";
@@ -1513,7 +1513,7 @@ class BottomNavigationBarItem extends DartClass {
         icon,
         title,
         activeIcon,
-        backgroundColor,
+        backgroundColor
     } = {}) {
         super();
 
@@ -1526,7 +1526,7 @@ class BottomNavigationBarItem extends DartClass {
 
 BottomNavigationBarType = {
     fixed: "BottomNavigationBarType.fixed",
-    shifting: "BottomNavigationBarType.shifting",
+    shifting: "BottomNavigationBarType.shifting"
 };
 
 class IconData extends DartClass {
@@ -1534,7 +1534,7 @@ class IconData extends DartClass {
         codePoint, {
             fontFamily,
             fontPackage,
-            matchTextDirection,
+            matchTextDirection
         } = {}) {
         super();
 
@@ -1547,7 +1547,7 @@ class IconData extends DartClass {
 
 TabBarIndicatorSize = {
     tab: "TabBarIndicatorSize.tab",
-    label: "TabBarIndicatorSize.label",
+    label: "TabBarIndicatorSize.label"
 };
 
 class Border extends FlutterWidget {
@@ -1555,7 +1555,7 @@ class Border extends FlutterWidget {
         top,
         right,
         bottom,
-        left,
+        left
     } = {}) {
         super();
 
@@ -1575,7 +1575,7 @@ class Border extends FlutterWidget {
             top: side,
             right: side,
             bottom: side,
-            left: side,
+            left: side
         });
     }
 }
@@ -1585,7 +1585,7 @@ class AnnotatedRegion extends DartClass {
         key,
         child,
         value,
-        sized,
+        sized
     } = {}) {
         super();
 
@@ -1603,7 +1603,7 @@ class SystemUiOverlayStyle extends DartClass {
         systemNavigationBarIconBrightness,
         statusBarColor,
         statusBarBrightness,
-        statusBarIconBrightness,
+        statusBarIconBrightness
     } = {}) {
         super();
 
@@ -1622,7 +1622,7 @@ class SystemUiOverlayStyle extends DartClass {
             statusBarColor: null,
             systemNavigationBarIconBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light,
-            statusBarBrightness:Brightness.dark,
+            statusBarBrightness:Brightness.dark
         });
         return w;
     }
@@ -1634,7 +1634,7 @@ class SystemUiOverlayStyle extends DartClass {
             statusBarColor: null,
             systemNavigationBarIconBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness:Brightness.light,
+            statusBarBrightness:Brightness.light
         });
         return w;
     }
@@ -1642,13 +1642,13 @@ class SystemUiOverlayStyle extends DartClass {
 
 Brightness = {
     dark: "Brightness.dark",
-    light: "Brightness.light",
+    light: "Brightness.light"
 };
 
 class MaterialColor extends DartClass {
     constructor (
         primary,
-        swatch,
+        swatch
     ) {
         super();
 
@@ -1678,7 +1678,7 @@ class InputDecorationTheme extends DartClass {
         focusedErrorBorder,
         disabledBorder,
         enabledBorder,
-        border,
+        border
     } = {}) {
         super();
 
@@ -1729,7 +1729,7 @@ class InputDecorationTheme extends DartClass {
             focusedErrorBorder: mapObj['focusedErrorBorder'],
             disabledBorder: mapObj['disabledBorder'],
             enabledBorder: mapObj['enabledBorder'],
-            border: mapObj['border'],
+            border: mapObj['border']
         });
 
         return obj;
@@ -1739,14 +1739,14 @@ class InputDecorationTheme extends DartClass {
 TargetPlatform = {
     android: "TargetPlatform.android",
     fuchsia: "TargetPlatform.fuchsia",
-    iOS: "TargetPlatform.iOS",
+    iOS: "TargetPlatform.iOS"
 };
 
 FloatingActionButtonLocation = {
     endDocked: {className:"FloatingActionButtonLocation.endDocked"},
     centerDocked: {className:"FloatingActionButtonLocation.centerDocked"},
     endFloat: {className:"FloatingActionButtonLocation.endFloat"},
-    centerFloat: {className:"FloatingActionButtonLocation.centerFloat"},
+    centerFloat: {className:"FloatingActionButtonLocation.centerFloat"}
 };
 
 class Colors {
@@ -1902,7 +1902,7 @@ class IconTheme extends DartClass {
     constructor ({
         key,
         data,
-        child,
+        child
     } = {}) {
         super();
 
@@ -1920,7 +1920,7 @@ class IconThemeData extends DartClass {
     constructor ({
         color,
         opacity,
-        size,
+        size
     } = {}) {
         super();
 
@@ -1962,7 +1962,7 @@ class DropdownMenuItem extends DartClass {
     constructor ({
         key,
         value,
-        child,
+        child
     } = {}) {
         super();
 
@@ -1988,7 +1988,7 @@ class BoxShadow extends DartClass {
         color,
         offset,
         blurRadius,
-        spreadRadius,
+        spreadRadius
     } = {}) {
         super();
 
@@ -2010,7 +2010,7 @@ class Quaternion extends DartClass {
         x,
         y,
         z,
-        w,
+        w
     ) {
         super();
 
@@ -2034,7 +2034,7 @@ class Slider extends FlutterWidget {
         label,
         activeColor,
         inactiveColor,
-        semanticFormatterCallback,
+        semanticFormatterCallback
     } = {}) {
         super();
 
@@ -2063,7 +2063,7 @@ class CircleAvatar extends DartClass {
         foregroundColor,
         radius,
         minRadius,
-        maxRadius,
+        maxRadius
     } = {}) {
         super();
 
@@ -2083,7 +2083,7 @@ class BorderDirectional extends DartClass {
         top,
         start,
         end,
-        bottom,
+        bottom
     } = {}) {
         super();
 
@@ -2116,7 +2116,7 @@ class Chip extends DartClass {
         backgroundColor,
         padding,
         materialTapTargetSize,
-        elevation,
+        elevation
     } = {}) {
         super();
 
@@ -2245,5 +2245,5 @@ module.exports = {
     ButtonTextTheme,
     Chip,
     InputBorder,
-    assert,
+    assert
 };

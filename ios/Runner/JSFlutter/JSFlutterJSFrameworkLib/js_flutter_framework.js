@@ -46,7 +46,7 @@ class MXNativeJSFlutterAppProxy {
         MXNativeJSFlutterApp.setCurrentJSApp(...arguments);
     }
 
-
+    //reloadApp
     static callFlutterReloadApp(app, widgetData) {
         if (!g_isNativeEnvironment) {
             //debugout
@@ -57,6 +57,7 @@ class MXNativeJSFlutterAppProxy {
         MXNativeJSFlutterApp.callFlutterReloadApp(...arguments);
     }
 
+    //调用Flutter函数
     static callFlutterWidgetChannel(method, args) {
 
         if (!g_isNativeEnvironment) {

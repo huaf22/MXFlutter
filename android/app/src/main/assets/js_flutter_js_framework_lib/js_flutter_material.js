@@ -10,7 +10,7 @@ let jsFlutterRequire = typeof mxRequire != "undefined" ? mxRequire : require;
 
 let {
     DartClass,
-    FlutterWidget,
+    FlutterWidget
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 class MaterialApp extends FlutterWidget {
@@ -117,7 +117,7 @@ class Scaffold extends FlutterWidget {
         bottomSheet,
         backgroundColor,
         resizeToAvoidBottomPadding,
-        primary,
+        primary
     } = {}) {
         super("Scaffold");
 
@@ -156,7 +156,7 @@ class AppBar extends FlutterWidget {
         centerTitle,
         titleSpacing,
         toolbarOpacity,
-        bottomOpacity,
+        bottomOpacity
     } = {}) {
         super();
 
@@ -198,7 +198,7 @@ class FlatButton extends FlutterWidget {
         shape,
         clipBehavior,
         materialTapTargetSize,
-        child,
+        child
     } = {}) {
         super();
 
@@ -237,7 +237,7 @@ class FlatButton extends FlutterWidget {
         clipBehavior,
         materialTapTargetSize,
         icon,
-        label,
+        label
     }) {
         let v = new FlatButton();
         v.staticFunctionName = "icon";
@@ -285,7 +285,7 @@ class RaisedButton extends FlutterWidget {
         clipBehavior,
         materialTapTargetSize,
         animationDuration,
-        child,
+        child
     } = {}) {
         super();
 
@@ -331,7 +331,7 @@ class RaisedButton extends FlutterWidget {
         materialTapTargetSize,
         animationDuration,
         icon,
-        label,
+        label
     }) {
         let v = new RaisedButton();
         v.staticFunctionName = "icon";
@@ -376,7 +376,7 @@ class FloatingActionButton extends FlutterWidget {
         shape,
         clipBehavior,
         materialTapTargetSize,
-        isExtended,
+        isExtended
     } = {}) {
         super();
 
@@ -409,7 +409,7 @@ class IconButton extends FlutterWidget {
         splashColor,
         disabledColor,
         onPressed,
-        tooltip,
+        tooltip
     } = {}) {
         super();
 
@@ -439,7 +439,7 @@ class DropdownButton extends FlutterWidget {
         style,
         iconSize,
         isDense,
-        isExpanded,
+        isExpanded
     } = {}) {
         super();
 
@@ -469,7 +469,7 @@ class PopupMenuButton extends FlutterWidget {
         padding,
         child,
         icon,
-        offset,
+        offset
     } = {}) {
         super();
 
@@ -511,7 +511,7 @@ class ButtonBar extends FlutterWidget {
         key,
         alignment,
         mainAxisSize,
-        children,
+        children
     } = {}) {
         super();
 
@@ -529,7 +529,7 @@ class Icon extends FlutterWidget {
             size,
             color,
             semanticLabel,
-            textDirection,
+            textDirection
         } = {}) {
         super();
 
@@ -550,7 +550,7 @@ class Hero extends FlutterWidget {
         flightShuttleBuilder,
         placeholderBuilder,
         transitionOnUserGestures,
-        child,
+        child
     } = {}) {
         super();
 
@@ -573,7 +573,7 @@ class Card extends FlutterWidget {
         margin,
         clipBehavior,
         child,
-        semanticContainer,
+        semanticContainer
     } = {}) {
         super();
 
@@ -591,7 +591,7 @@ class Card extends FlutterWidget {
 class MergeSemantics extends FlutterWidget {
     constructor ({
         key,
-        child,
+        child
     } = {}) {
         super();
 
@@ -606,7 +606,7 @@ class PopupMenuItem extends FlutterWidget {
         value,
         enabled,
         height,
-        child,
+        child
     } = {}) {
         super();
 
@@ -624,7 +624,7 @@ class FlexibleSpaceBar extends FlutterWidget {
         title,
         background,
         centerTitle,
-        collapseMode,
+        collapseMode
     } = {}) {
         super();
 
@@ -644,7 +644,7 @@ class BottomAppBar extends FlutterWidget {
         shape,
         clipBehavior,
         notchMargin,
-        child,
+        child
     } = {}) {
         super();
 
@@ -666,7 +666,7 @@ class BottomNavigationBar extends FlutterWidget {
         currentIndex,
         type,
         fixedColor,
-        iconSize,
+        iconSize
     } = {}) {
         super();
 
@@ -688,7 +688,7 @@ class Radio extends FlutterWidget {
         groupValue,
         onChanged,
         activeColor,
-        materialTapTargetSize,
+        materialTapTargetSize
     } = {}) {
         super();
 
@@ -749,7 +749,7 @@ class Semantics extends FlutterWidget {
         onSetSelection,
         onDidGainAccessibilityFocus,
         onDidLoseAccessibilityFocus,
-        customSemanticsActions,
+        customSemanticsActions
     } = {}) {
         super();
 
@@ -821,7 +821,7 @@ class RawMaterialButton extends FlutterWidget {
         animationDuration,
         clipBehavior,
         materialTapTargetSize,
-        child,
+        child
     } = {}) {
         super();
 
@@ -847,7 +847,7 @@ class RawMaterialButton extends FlutterWidget {
 
 class CircleBorder extends FlutterWidget {
     constructor ({
-        side,
+        side
     } = {}) {
         super();
 
@@ -864,7 +864,7 @@ class SafeArea extends FlutterWidget {
         right,
         bottom,
         minimum,
-        child,
+        child
     } = {}) {
         super();
 
@@ -887,7 +887,7 @@ MaterialTapTargetSize = {
 class Builder extends FlutterWidget {
     constructor ({
         key,
-        builder,
+        builder
     } = {}) {
         super();
 
@@ -914,7 +914,7 @@ class DefaultTabController extends FlutterWidget {
         key,
         length,
         initialIndex,
-        child,
+        child
     } = {}) {
         super();
 
@@ -943,7 +943,7 @@ class TabBar extends FlutterWidget {
         unselectedLabelColor,
         unselectedLabelStyle,
         dragStartBehavior,
-        onTap,
+        onTap
     } = {}) {
         super();
 
@@ -970,7 +970,7 @@ class TabController extends FlutterWidget {
     constructor ({
         initialIndex,
         length,
-        vsync,
+        vsync
     } = {}) {
         super();
 
@@ -985,7 +985,7 @@ class Tab extends FlutterWidget {
         key,
         text,
         icon,
-        child,
+        child
     } = {}) {
         super();
 
@@ -1003,7 +1003,7 @@ class TabBarView extends FlutterWidget {
         children,
         controller,
         physics,
-        dragStartBehavior,
+        dragStartBehavior
     } = {}) {
         super();
 
@@ -1051,5 +1051,5 @@ module.exports = {
     TabBar,
     TabController,
     Tab,
-    TabBarView,
+    TabBarView
 };

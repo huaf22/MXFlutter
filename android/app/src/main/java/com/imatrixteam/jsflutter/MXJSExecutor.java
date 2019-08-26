@@ -10,6 +10,9 @@ import android.content.Context;
 
 import com.eclipsesource.v8.V8;
 
+import org.json.JSONObject;
+
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -41,6 +44,10 @@ public class MXJSExecutor {
         executor = Executors.newSingleThreadExecutor();
         setup();
         return this;
+    }
+
+    public void execute(Runnable action) {
+        executor.execute(action);
     }
 
     private void setup() {
@@ -80,19 +87,20 @@ public class MXJSExecutor {
     }
 
     public void executeScriptAsync(String script, ExecuteScriptCallback callback) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Object result = runtime.executeScript(script);
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onComplete(result);
-                    }
-                });
-            }
-        });
-
+        Object result = runtime.executeScript(script);
+        callback.onComplete(result);
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                Object result = runtime.executeScript(script);
+//                ((Activity)context).runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        callback.onComplete(result);
+//                    }
+//                });
+//            }
+//        });
     }
 
     public void executeScriptPath(String path, ExecuteScriptCallback callback) {
@@ -100,13 +108,13 @@ public class MXJSExecutor {
             @Override
             public void run() {
                 String script = FileUtils.getFromAssets(context, path);
-                Object result = runtime.executeScript(script);
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onComplete(result);
-                    }
-                });
+                V8Object result = runtime.executeObjectScript(script);
+//                ((Activity)context).runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        callback.onComplete(result);
+//                    }
+//                });
             }
         });
     }
@@ -141,16 +149,15 @@ public class MXJSExecutor {
     }
 
     public void invokeJSValue(V8Object jsAppObj, String method, Object args, MXJSValueCallback callback){
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
                 //获取执行结果
                 if (jsAppObj != null) {
-                    System.out.println(args.toString());
-                    jsAppObj.executeFunction(method, new V8Array(runtime).push(args.toString()));
+                    jsAppObj.executeFunction(method, new V8Array(runtime).push(new JSONObject((Map) args).toString()));
                 }
-            }
-        });
+//            }
+//        });
     }
 
     interface MXJSExecutorBlock {

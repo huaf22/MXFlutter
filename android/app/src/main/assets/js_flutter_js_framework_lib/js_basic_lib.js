@@ -3,7 +3,7 @@
 var MXJSFlutterJSBasicLib = {
     _loadedMoudleCache: {},
     _loadedMoudleCahceWithAbsolutePath: {},
-    require: function(file) {
+    require(file) {
 
         var prefix = "./";
         if(file.indexOf(prefix) == 0){

@@ -9,6 +9,8 @@ import com.eclipsesource.v8.JavaCallback;
 import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
+import com.eclipsesource.v8.utils.V8ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +29,8 @@ public class MXJSEngine {
     private Set<String> runnedScriptFile;
 
     private Context mContext;
+
+    private Map<String, String[]> dirMap = new HashMap<>();
 
     private MXJSEngine(Context context) {
         mContext = context;
@@ -83,32 +87,50 @@ public class MXJSEngine {
                     for (String dir : searchDirArray
                     ) {
                         try {
-                            String[] files = mContext.getAssets().list(dir);
-                            for (String fileName: files
-                                 ) {
-                                if (fileName.equals(filePath)){
-                                    String absolutePathTemp = dir + "/" + filePath;
-                                    jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
-                                    if (TextUtils.isEmpty(jsScript)) {
-                                        absolutePath = absolutePathTemp;
-                                        break;
+                            if (!dirMap.containsKey(dir)) {
+                                String[] files = mContext.getAssets().list(dir);
+                                dirMap.put(dir, files);
+                            }
+                            if (dir.contains("app_test")) {
+                                String absolutePathTemp = dir + "/" + filePath;
+                                jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
+                                if (!TextUtils.isEmpty(jsScript)) {
+                                    absolutePath = absolutePathTemp;
+                                    break;
+                                }
+                            } else {
+                                for (String fileName: dirMap.get(dir)
+                                ) {
+                                    if (fileName.equals(filePath)){
+                                        String absolutePathTemp = dir + "/" + filePath;
+                                        jsScript = FileUtils.getFromAssets(mContext, absolutePathTemp);
+                                        if (!TextUtils.isEmpty(jsScript)) {
+                                            absolutePath = absolutePathTemp;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-
+                            if (!TextUtils.isEmpty(jsScript)) {
+                                break;
+                            }
                         }catch (Exception e) {
+                            Log.e("wennliu", e.getMessage());
                             e.printStackTrace();
                         }
 
                     }
-
-                    String injectScript = String.format("(function (){let module = {exports:{}};(function (){%s})(); return module.exports;})();", jsScript);
-                    Object value = jsExecutor.runtime.executeScript(injectScript);
-                    if (value != null) {
-                        Map<String, Object> module = new HashMap<>();
-                        module.put("exports", value);
-                        module.put("absolutePath", absolutePath);
-                        return module;
+                    try {
+                        String injectScript = String.format("(function (){let module = {exports:{}};(function (){\n%s\n})(); return module.exports;})();", jsScript);
+                        V8Object value  = (V8Object) jsExecutor.runtime.executeObjectScript(injectScript);
+                        if (value != null) {
+                            Map<String, Object> module = new HashMap<>();
+                            module.put("exports", value);
+                            module.put("absolutePath", absolutePath);
+                            return V8ObjectUtils.toV8Object(jsExecutor.runtime, module);
+                        }
+                    }catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
                 return null;

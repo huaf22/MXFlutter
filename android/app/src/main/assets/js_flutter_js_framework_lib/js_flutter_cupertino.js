@@ -10,7 +10,7 @@ let jsFlutterRequire = typeof mxRequire != "undefined" ? mxRequire : require;
 
 let {
     DartClass,
-    FlutterWidget,
+    FlutterWidget
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 
@@ -18,7 +18,7 @@ class CupertinoActivityIndicator extends FlutterWidget {
     constructor ({
         key,
         animating,
-        radius,
+        radius
     } = {}) {
         super();
 
@@ -35,7 +35,7 @@ class CupertinoAlertDialog extends FlutterWidget {
         content,
         actions,
         scrollController,
-        actionScrollController,
+        actionScrollController
     } = {}) {
         super();
 
@@ -57,7 +57,7 @@ class CupertinoButton extends FlutterWidget {
         minSize,
         pressedOpacity,
         borderRadius,
-        onPressed,
+        onPressed
     } = {}) {
         super();
 
@@ -75,7 +75,7 @@ class CupertinoButton extends FlutterWidget {
 class CupertinoDialog extends FlutterWidget {
     constructor ({
         key,
-        child,
+        child
     } = {}) {
         super();
 
@@ -90,7 +90,7 @@ class CupertinoDialogAction extends FlutterWidget {
         isDefaultAction,
         isDestructiveAction,
         textStyle,
-        child,
+        child
     } = {}) {
         super();
 
@@ -112,7 +112,7 @@ class CupertinoSlider extends FlutterWidget {
         min,
         max,
         divisions,
-        activeColor,
+        activeColor
     } = {}) {
         super();
 
@@ -134,7 +134,7 @@ class CupertinoSwitch extends FlutterWidget {
         value,
         onChanged,
         activeColor,
-        dragStartBehavior,
+        dragStartBehavior
     } = {}) {
         super();
 
@@ -152,7 +152,7 @@ class CupertinoPageTransition extends FlutterWidget {
         primaryRouteAnimation,
         secondaryRouteAnimation,
         child,
-        linearTransition,
+        linearTransition
     } = {}) {
         super();
 
@@ -168,7 +168,7 @@ class CupertinoFullscreenDialogTransition extends FlutterWidget {
     constructor ({
         key,
         animation,
-        child,
+        child
     } = {}) {
         super();
 
@@ -192,7 +192,7 @@ class CupertinoNavigationBar extends FlutterWidget {
         padding,
         actionsForegroundColor,
         transitionBetweenRoutes,
-        heroTag,
+        heroTag
     } = {}) {
         super();
 
@@ -222,7 +222,7 @@ class CupertinoTabBar extends FlutterWidget {
         activeColor,
         inactiveColor,
         iconSize,
-        border,
+        border
     } = {}) {
         super();
 
@@ -244,7 +244,7 @@ class CupertinoPageScaffold extends FlutterWidget {
         navigationBar,
         backgroundColor,
         resizeToAvoidBottomInset,
-        child,
+        child
     } = {}) {
         super();
 
@@ -262,7 +262,7 @@ class CupertinoTabScaffold extends FlutterWidget {
         tabBar,
         tabBuilder,
         backgroundColor,
-        resizeToAvoidBottomInset,
+        resizeToAvoidBottomInset
     } = {}) {
         super();
 
@@ -295,7 +295,7 @@ class CupertinoTabView extends FlutterWidget {
         routes,
         onGenerateRoute,
         onUnknownRoute,
-        navigatorObservers,
+        navigatorObservers
     } = {}) {
         super();
 
@@ -328,5 +328,5 @@ module.exports = {
     CupertinoTabBar,
     CupertinoPageScaffold,
     CupertinoTabScaffold,
-    CupertinoTabView,
+    CupertinoTabView
 };

@@ -17,19 +17,20 @@ let {
     Color,
     EdgeInsets,
     FlutterWidgetMirrorMgr,
-    IconThemeData,
+    IconThemeData
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 let {
-    TextTheme,
+    TextTheme
 } = jsFlutterRequire("./js_flutter_text.js");
 
 //全局变量
-var g_jsFlutterApp = null;
+let g_jsFlutterApp = null;
 
 //全局函数
 function runApp(app) {
     g_jsFlutterApp = app;
+    currentJSApp = app;
     MXNativeJSFlutterAppProxy.callNativeSetCurrentJSApp(g_jsFlutterApp);
 }
 
@@ -42,7 +43,8 @@ class MXNativeJSFlutterAppProxy {
             MXJSLog.log("callNativeSetCurrentJSApp(app");
             return;
         }
-
+        currentJSApp = app;
+        MXJSLog.log("6666666666:", JSON.stringify(app))
         MXNativeJSFlutterApp.setCurrentJSApp(...arguments);
     }
 
@@ -53,6 +55,7 @@ class MXNativeJSFlutterAppProxy {
             MXJSLog.log("callFlutterReloadApp(app", widgetData, ")");
             return;
         }
+        currentJSApp = app;
 
         MXNativeJSFlutterApp.callFlutterReloadApp(...arguments);
     }
@@ -81,22 +84,23 @@ function invokeFlutterFunction(flutterCallArgs){
 class MXJSLog {
     static log() {
 
-        console.log("MXJSFlutter:[JS]-:");
-        console.log(...arguments);
 
         if (g_isNativeEnvironment) {
             JSAPI_log("MXJSFlutter:[JS]-" + arguments[0]);
+        } else {
+            console.log("MXJSFlutter:[JS]-:");
+            console.log(...arguments);
         }
 
     }
 
     static error() {
 
-        console.log("MXJSFlutter:[JS]-[Error]:");
-        console.log(...arguments);
-
         if (g_isNativeEnvironment) {
             JSAPI_log("MXJSFlutter:[JS]-[Error]:" + arguments[0]);
+        } else{
+            console.log("MXJSFlutter:[JS]-[Error]:");
+            console.log(...arguments);
         }
 
     }
@@ -243,12 +247,13 @@ class MXJSFlutterApp {
     //flutter->js 用于app直接显示
     runWithPageName(pageName) {
         let w = this.createJSWidgetWithName(pageName);
+        MXJSLog.log("[JS]runWithPageName:"+JSON.stringify(w));
         this.runApp(w);
     }
 
     navigatorPushWithPageName(pageName, args) {
         let w = this.createJSWidgetWithName(pageName);
-
+        MXJSLog.log("[JS]navigatorPushWithPageName:"+JSON.stringify(w));
         this.navigatorPush(w, args);
     }
 
@@ -269,6 +274,8 @@ class MXJSFlutterApp {
 
         let app = this;
         let widgetData = this.rootBuildContext.buildRootWidget();
+
+        MXJSLog.log("[JS]runApp:"+widgetData)
 
         MXNativeJSFlutterAppProxy.callFlutterReloadApp(app, widgetData);
     }
@@ -292,8 +299,12 @@ class MXJSFlutterApp {
 
         MXJSLog.log("MXJSFlutterApp:nativeCall" + args);
 
+        args = JSON.parse(args)
         let method = args["method"];
         let callArgs = args["arguments"];
+
+        MXJSLog.log("MXJSFlutterApp:nativeCall" + method);
+        MXJSLog.log("MXJSFlutterApp:nativeCall" + callArgs);
 
         let fun = this[method];
 
@@ -311,7 +322,7 @@ class MXJSFlutterApp {
 
     flutterCallNavigatorPushWithPageName(args) {
         let pageName = args["pageName"];
-
+        MXJSLog.log("[JS]flutterCallNavigatorPushWithPageName:"+pageName);
         this.navigatorPushWithPageName(pageName, args);
     }
 
@@ -792,7 +803,7 @@ class MediaQuery extends DartClass {
     constructor({
         key,
         data, //MediaQueryData
-        child,
+        child
     } = {}) {
         super();
 
@@ -823,7 +834,7 @@ class MediaQueryData extends DartClass {
         accessibleNavigation,
         invertColors,
         disableAnimations,
-        boldText,
+        boldText
     } = {}) {
         super();
 
@@ -874,7 +885,7 @@ class Theme extends DartClass {
         key,
         data,
         isMaterialAppTheme,
-        child,
+        child
     } = {}) {
         super();
 
@@ -944,7 +955,7 @@ class ThemeData extends DartClass {
         pageTransitionsTheme,
         colorScheme,
         dialogTheme,
-        typography,
+        typography
     } = {}) {
         super();
 
@@ -1062,6 +1073,7 @@ module.exports = {
     //全局
     g_jsFlutterApp,
     runApp,
+    currentJSApp,
     invokeFlutterFunction,
     //class 定义
     MXNativeJSFlutterAppProxy,
@@ -1075,7 +1087,5 @@ module.exports = {
     MediaQueryData,
     Theme,
     ThemeData,
-    MXJSStatelessWidget,
-
-
+    MXJSStatelessWidget
 };

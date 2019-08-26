@@ -12,7 +12,7 @@ let {
     DartClass,
     FlutterWidget,
     Color,
-    Locale,
+    Locale
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 /// Creates a text widget.
@@ -30,7 +30,7 @@ class Text extends FlutterWidget {
         overflow,
         textScaleFactor,
         maxLines,
-        semanticsLabel,
+        semanticsLabel
     }={}) {
         super();
 
@@ -73,7 +73,7 @@ class Text extends FlutterWidget {
             overflow,
             textScaleFactor,
             maxLines,
-            semanticsLabel,
+            semanticsLabel
         } = {}
     ) {
         var t = new Text();
@@ -105,7 +105,7 @@ class RichText extends FlutterWidget {
         overflow,
         textScaleFactor,
         maxLines,
-        locale,
+        locale
     } = {}) {
         super();
 
@@ -130,7 +130,7 @@ class DefaultTextStyle extends FlutterWidget {
         softWrap,
         overflow,
         maxLines,
-        child,
+        child
     } = {}) {
         super();
 
@@ -165,7 +165,7 @@ class TextStyle extends DartClass {
         decorationStyle,
         debugLabel,
         fontFamily,
-        packages,    // 此处因为和 js 的关键字 package 冲突了，所以改成 packages
+        packages    // 此处因为和 js 的关键字 package 冲突了，所以改成 packages
     } = {}) {
         super();
 
@@ -241,7 +241,7 @@ class TextSpan extends FlutterWidget {
         style,
         text,
         children,
-        recognizer,
+        recognizer
     } = {}) {
         super();
 
@@ -256,7 +256,7 @@ TextDecoration = {
     none: 'TextDecoration.none',
     underline: 'TextDecoration.underline',
     overline: 'TextDecoration.overline',
-    lineThrough: 'TextDecoration.lineThrough',
+    lineThrough: 'TextDecoration.lineThrough'
 }
 
 TextAlign = {
@@ -265,14 +265,14 @@ TextAlign = {
     center: "TextAlign.center",
     justify: "TextAlign.justify",
     start: "TextAlign.start",
-    end: "TextAlign.end",
+    end: "TextAlign.end"
 };
 
 
 TextOverflow = {
     clip: "TextOverflow.clip",
     fade: "TextOverflow.fade",
-    ellipsis: "TextOverflow.ellipsis",
+    ellipsis: "TextOverflow.ellipsis"
 };
 
 
@@ -290,7 +290,7 @@ class TextTheme extends DartClass {
         caption,
         button,
         subtitle,
-        overline,
+        overline
     } = {}) {
         super();
 
@@ -338,18 +338,18 @@ TextDecorationStyle = {
     dashed: "TextDecorationStyle.dashed",
     dotted: "TextDecorationStyle.dotted",
     double: "TextDecorationStyle.double",
-    solid: "TextDecorationStyle.solid",
+    solid: "TextDecorationStyle.solid"
   }
       
 TextBaseline = {
     alphabetic: "TextBaseline.alphabetic",
-    ideographic: "TextBaseline.ideographic",
+    ideographic: "TextBaseline.ideographic"
 }
       
 
 TextDirection = {
     rtl: "TextDirection.rtl",
-    ltr: "TextDirection.ltr",
+    ltr: "TextDirection.ltr"
 }
 
 FontWeight = {
@@ -363,19 +363,19 @@ FontWeight = {
     w600: "FontWeight.w600",
     w700: "FontWeight.w700",
     w800: "FontWeight.w800",
-    w900: "FontWeight.w900",
+    w900: "FontWeight.w900"
 }
 
 FontStyle = {
     italic: "FontStyle.italic",
-    normal: "FontStyle.normal",
+    normal: "FontStyle.normal"
 }
   
 class Shadow extends FlutterWidget {
     constructor ({
         color,
         offset,
-        blurRadius,
+        blurRadius
     } = {}) {
         super();
 
@@ -448,7 +448,7 @@ class TextFormField extends FlutterWidget {
         keyboardAppearance,
         scrollPadding,
         enableInteractiveSelection,
-        buildCounter,
+        buildCounter
     } = {}) {
         super();
 
@@ -524,7 +524,7 @@ class InputDecoration extends FlutterWidget {
         border,
         enabled,
         semanticCounterText,
-        alignLabelWithHint,
+        alignLabelWithHint
     } = {}) {
         super();
 
@@ -573,7 +573,7 @@ class InputDecoration extends FlutterWidget {
         filled,
         fillColor,
         border,
-        enabled,
+        enabled
     }) {
         let v = new InputDecoration();
         v.staticFunctionName = "collapsed";
@@ -592,7 +592,7 @@ class InputDecoration extends FlutterWidget {
 
 class TextEditingController extends FlutterWidget {
     constructor ({
-        text,
+        text
     } = {}) {
         super();
 
@@ -611,7 +611,7 @@ class TextInputType extends DartClass {
 
     static numberWithOptions(
         signed,
-        decimal,
+        decimal
     ) {
         let v = new TextInputType();
         v.constructorName = "numberWithOptions";
@@ -676,7 +676,7 @@ TextCapitalization = {
     words: "TextCapitalization.words",
     sentences: "TextCapitalization.sentences",
     characters: "TextCapitalization.characters",
-    none: "TextCapitalization.none",
+    none: "TextCapitalization.none"
 };
 
 
@@ -693,13 +693,13 @@ TextInputAction = {
     join: "TextInputAction.join",
     route: "TextInputAction.route",
     emergencyCall: "TextInputAction.emergencyCall",
-    newline: "TextInputAction.newline",
+    newline: "TextInputAction.newline"
 };
 
 class UnderlineInputBorder extends FlutterWidget {
     constructor ({
         borderSide,
-        borderRadius,
+        borderRadius
     } = {}) {
         super();
 
@@ -712,7 +712,7 @@ class OutlineInputBorder extends FlutterWidget {
     constructor ({
         borderSide,
         borderRadius,
-        gapPadding,
+        gapPadding
     } = {}) {
         super();
 
@@ -753,7 +753,7 @@ class TextField extends FlutterWidget {
         dragStartBehavior,
         enableInteractiveSelection,
         onTap,
-        buildCounter,
+        buildCounter
     } = {}) {
         super();
 

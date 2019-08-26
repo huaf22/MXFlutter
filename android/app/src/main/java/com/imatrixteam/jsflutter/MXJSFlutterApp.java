@@ -56,7 +56,7 @@ public class MXJSFlutterApp {
         jsEngine.addSearchDir(jsFlutterFrameworkDir);
 
         //app业务代码搜索路径
-        String jsAppCoreDir = "js_flutter_scr/app_test";
+        String jsAppCoreDir = "js_flutter_src/app_test";
         jsEngine.addSearchDir(jsAppCoreDir);
 
         String jsBasicLibPath = jsFlutterFrameworkDir + "/" +  "js_basic_lib.js";
@@ -80,10 +80,19 @@ public class MXJSFlutterApp {
                     return;
 
                 if(methodCall.method.equals("callJS")){
-                    if (jsAppObj != null) {
+                    //if (jsAppObj != null) {
                         //jsAppObj.executeJSFunction("nativeCall", methodCall.arguments);
-                        currentApp.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
-                    }
+                    currentApp.jsExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            V8Object jsAppObj = jsExecutor.runtime.getObject("currentJSApp");
+                            if (jsAppObj == null) return;
+                            currentApp.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
+                            //jsAppObj.release();
+                        }
+                    });
+
+                    //}
                 }
             }
         });
@@ -99,13 +108,21 @@ public class MXJSFlutterApp {
     }
 
     public void runAppWithPageName(String pageName) {
-        MXNativeJSFlutterApp MXNativeJSFlutterApp = new MXNativeJSFlutterApp();
-        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
-                "setCurrentJSApp", new Class<?>[]{V8Object.class});
-        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp,
-                "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
-        jsExecutor.registerJavaMethod(MXNativeJSFlutterApp,
-                "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class, String.class});
+
+        jsExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                MXNativeJSFlutterApp MXNativeJSFlutterApp = new MXNativeJSFlutterApp();
+                V8Object v8Object = new V8Object(jsExecutor.runtime);
+                jsExecutor.runtime.add("MXNativeJSFlutterApp",v8Object);
+                v8Object.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
+                        "setCurrentJSApp", new Class<?>[]{V8Object.class});
+                v8Object.registerJavaMethod(MXNativeJSFlutterApp,
+                        "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
+                v8Object.registerJavaMethod(MXNativeJSFlutterApp,
+                        "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class, String.class});
+            }
+        });
 
         jsExecutor.executeScriptPath("js_flutter_src/app_test/main.js", new MXJSExecutor.ExecuteScriptCallback() {
             @Override
@@ -131,7 +148,8 @@ public class MXJSFlutterApp {
 
         //js --> flutter
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
-            jsAppObj = jsApp;
+            V8Object jsAppObj = jsExecutor.runtime.getObject("currentJSApp");
+//            jsAppObj = jsApp;
             jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
         }
 

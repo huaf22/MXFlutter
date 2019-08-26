@@ -10,18 +10,18 @@ let jsFlutterRequire = typeof mxRequire != "undefined" ? mxRequire : require;
 
 let {
     FlutterWidget,
-    FlutterCallArgs,
+    FlutterCallArgs
 } = jsFlutterRequire("./js_flutter_basic_types.js");
 
 let {
-    invokeFlutterFunction,
+    invokeFlutterFunction
 } = jsFlutterRequire("./js_flutter_framework.js");
 
 
 class Animation extends FlutterWidget {
     constructor({
         tween,
-        controller,
+        controller
     } = {}) {
         super();
 
@@ -69,7 +69,7 @@ class Animation extends FlutterWidget {
 class Tween extends FlutterWidget {
     constructor ({
         begin,
-        end,
+        end
     } = {}) {
         super();
 
@@ -86,7 +86,7 @@ class AnimationController extends FlutterWidget {
         lowerBound,
         upperBound,
         animationBehavior,
-        vsync,
+        vsync
     } = {}) {
         super();
 
@@ -150,7 +150,7 @@ class AnimatedBuilder extends FlutterWidget {
         animation,
         builder,
         child,
-        widget,
+        widget
     } = {}) {
         super();
 
@@ -168,7 +168,7 @@ class Duration extends FlutterWidget {
         hours,
         minutes,
         seconds,
-        milliseconds,
+        milliseconds
     } = {}) {
         super();
 
@@ -184,12 +184,12 @@ AnimationStatus = {
     dismissed: "AnimationStatus.dismissed",
     forward: "AnimationStatus.forward",
     reverse: "AnimationStatus.reverse",
-    completed: "AnimationStatus.completed",
+    completed: "AnimationStatus.completed"
 };
 
 class CurveTween extends FlutterWidget {
     constructor ({
-        curve,
+        curve
     } = {}) {
         super();
 
@@ -201,7 +201,7 @@ class Interval extends FlutterWidget {
     constructor (
         begin,
         end,
-{			curve,
+{			curve
     } = {}) {
         super();
 
@@ -232,7 +232,7 @@ class FadeTransition extends FlutterWidget {
         key,
         opacity,
         alwaysIncludeSemantics,
-        child,
+        child
     } = {}) {
         super();
 
@@ -249,7 +249,7 @@ class SlideTransition extends FlutterWidget {
         position,
         transformHitTests,
         textDirection,
-        child,
+        child
     } = {}) {
         super();
 
@@ -272,5 +272,5 @@ module.exports = {
     Interval,
     Curves,
     FadeTransition,
-    SlideTransition,
+    SlideTransition
 };

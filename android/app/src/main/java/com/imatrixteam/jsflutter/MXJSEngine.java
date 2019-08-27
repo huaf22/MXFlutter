@@ -9,6 +9,7 @@ import com.eclipsesource.v8.JavaCallback;
 import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
+import com.eclipsesource.v8.V8ScriptException;
 import com.eclipsesource.v8.utils.V8ObjectUtils;
 
 import java.util.ArrayList;
@@ -115,7 +116,6 @@ public class MXJSEngine {
                                 break;
                             }
                         }catch (Exception e) {
-                            Log.e("wennliu", e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -125,12 +125,15 @@ public class MXJSEngine {
                         V8Object value  = (V8Object) jsExecutor.runtime.executeObjectScript(injectScript);
                         if (value != null) {
                             Map<String, Object> module = new HashMap<>();
-                            module.put("exports", value);
                             module.put("absolutePath", absolutePath);
+                            module.put("exports", value);
                             return V8ObjectUtils.toV8Object(jsExecutor.runtime, module);
                         }
-                    }catch (Exception e) {
-                        e.printStackTrace();
+                    }catch (V8ScriptException e) {
+                        Log.e(TAG,"V8ScriptException:JSMessage:"+e.getJSMessage());
+                        Log.e(TAG,"V8ScriptException:JSFilePath:"+absolutePath);
+                        Log.e(TAG,"V8ScriptException:SourceLine:"+e.getSourceLine());
+                        Log.e(TAG,"V8ScriptException:LineNumber:"+e.getLineNumber());
                     }
                 }
                 return null;

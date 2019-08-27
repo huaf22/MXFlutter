@@ -24,14 +24,9 @@ let {
     TextTheme
 } = jsFlutterRequire("./js_flutter_text.js");
 
-//全局变量
-let g_jsFlutterApp = null;
-
 //全局函数
 function runApp(app) {
-    g_jsFlutterApp = app;
-    currentJSApp = app;
-    MXNativeJSFlutterAppProxy.callNativeSetCurrentJSApp(g_jsFlutterApp);
+    MXNativeJSFlutterAppProxy.callNativeSetCurrentJSApp(app);
 }
 
 //Native 接口封装
@@ -40,12 +35,11 @@ class MXNativeJSFlutterAppProxy {
     static callNativeSetCurrentJSApp(app) {
         if (!g_isNativeEnvironment) {
             //debugout
-            MXJSLog.log("callNativeSetCurrentJSApp(app");
+            MXJSLog.log("callNativeSetCurrentJSApp(app)");
             return;
         }
         currentJSApp = app;
-        MXJSLog.log("6666666666:", JSON.stringify(app))
-        MXNativeJSFlutterApp.setCurrentJSApp(...arguments);
+        MXNativeJSFlutterApp.setCurrentJSApp(app);
     }
 
 
@@ -56,8 +50,7 @@ class MXNativeJSFlutterAppProxy {
             return;
         }
         currentJSApp = app;
-
-        MXNativeJSFlutterApp.callFlutterReloadApp(...arguments);
+        MXNativeJSFlutterApp.callFlutterReloadApp(app, widgetData);
     }
 
     static callFlutterWidgetChannel(method, args) {
@@ -83,7 +76,6 @@ function invokeFlutterFunction(flutterCallArgs){
 //JSFlutter JS Runtime
 class MXJSLog {
     static log() {
-
 
         if (g_isNativeEnvironment) {
             JSAPI_log("MXJSFlutter:[JS]-" + arguments[0]);
@@ -247,13 +239,11 @@ class MXJSFlutterApp {
     //flutter->js 用于app直接显示
     runWithPageName(pageName) {
         let w = this.createJSWidgetWithName(pageName);
-        MXJSLog.log("[JS]runWithPageName:"+JSON.stringify(w));
         this.runApp(w);
     }
 
     navigatorPushWithPageName(pageName, args) {
         let w = this.createJSWidgetWithName(pageName);
-        MXJSLog.log("[JS]navigatorPushWithPageName:"+JSON.stringify(w));
         this.navigatorPush(w, args);
     }
 
@@ -274,8 +264,6 @@ class MXJSFlutterApp {
 
         let app = this;
         let widgetData = this.rootBuildContext.buildRootWidget();
-
-        MXJSLog.log("[JS]runApp:"+widgetData)
 
         MXNativeJSFlutterAppProxy.callFlutterReloadApp(app, widgetData);
     }
@@ -303,9 +291,6 @@ class MXJSFlutterApp {
         let method = args["method"];
         let callArgs = args["arguments"];
 
-        MXJSLog.log("MXJSFlutterApp:nativeCall" + method);
-        MXJSLog.log("MXJSFlutterApp:nativeCall" + callArgs);
-
         let fun = this[method];
 
         if (fun != null) {
@@ -322,7 +307,6 @@ class MXJSFlutterApp {
 
     flutterCallNavigatorPushWithPageName(args) {
         let pageName = args["pageName"];
-        MXJSLog.log("[JS]flutterCallNavigatorPushWithPageName:"+pageName);
         this.navigatorPushWithPageName(pageName, args);
     }
 
@@ -1071,9 +1055,7 @@ class ThemeData extends DartClass {
 
 module.exports = {
     //全局
-    g_jsFlutterApp,
     runApp,
-    currentJSApp,
     invokeFlutterFunction,
     //class 定义
     MXNativeJSFlutterAppProxy,

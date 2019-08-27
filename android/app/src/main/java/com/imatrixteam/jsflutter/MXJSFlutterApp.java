@@ -1,15 +1,14 @@
 package com.imatrixteam.jsflutter;
 
+import android.content.Context;
+
 import com.eclipsesource.v8.V8Object;
 
-import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import android.content.Context;
-
-import com.eclipsesource.v8.V8Array;
 
 public class MXJSFlutterApp {
 
@@ -47,7 +46,6 @@ public class MXJSFlutterApp {
 
         jsEngine = MXJSEngine.getInstance(mContext);
         jsExecutor = jsEngine.jsExecutor;
-
         //todo 调试时，指向本地路径，可以热重载
         String jsBasePath = "";
 
@@ -71,7 +69,6 @@ public class MXJSFlutterApp {
 
     //flutter --> js
     void setUpChannel(BinaryMessenger flutterViewController) {
-//        final WeakReference _weakThis = new WeakReference(MXJSFlutterApp.this);
         jsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
         jsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
@@ -80,15 +77,11 @@ public class MXJSFlutterApp {
                     return;
 
                 if(methodCall.method.equals("callJS")){
-                    //if (jsAppObj != null) {
-                        //jsAppObj.executeJSFunction("nativeCall", methodCall.arguments);
                     currentApp.jsExecutor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            V8Object jsAppObj = jsExecutor.runtime.getObject("currentJSApp");
                             if (jsAppObj == null) return;
                             currentApp.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
-                            //jsAppObj.release();
                         }
                     });
 
@@ -120,7 +113,7 @@ public class MXJSFlutterApp {
                 v8Object.registerJavaMethod(MXNativeJSFlutterApp,
                         "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
                 v8Object.registerJavaMethod(MXNativeJSFlutterApp,
-                        "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class, String.class});
+                        "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class,V8Object.class,});
             }
         });
 
@@ -143,19 +136,28 @@ public class MXJSFlutterApp {
 
         //js --> native
         public void setCurrentJSApp(V8Object jsApp) {
-            jsAppObj = jsApp;
+            jsAppObj = (V8Object) jsExecutor.runtime.get("currentJSApp");
         }
 
         //js --> flutter
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
-            V8Object jsAppObj = jsExecutor.runtime.getObject("currentJSApp");
-//            jsAppObj = jsApp;
+            jsAppObj = (V8Object) jsExecutor.runtime.get("currentJSApp");
             jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
         }
 
         //js --> flutter
-        public void callFlutterWidgetChannel(String methodName, String args) {
-            jsFlutterAppChannel.invokeMethod(methodName, args);
+        public void callFlutterWidgetChannel(String methodName, V8Object args) {
+            String[] datas = args.getKeys();
+            HashMap dataMap =  new HashMap();
+            for (int i = 0; i < datas.length; i++) {
+                dataMap.put(datas[i],args.get(datas[i]));
+            }
+            ((MXFlutterActivity)mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    jsFlutterAppChannel.invokeMethod(methodName, dataMap);
+                }
+            });
         }
     }
 }

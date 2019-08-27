@@ -13,7 +13,7 @@ function calcJSFrameworkFilePath(filePath) {
         "js_flutter_ui.js",
         "js_flutter_basic_types.js",
         "js_flutter_material.js",
-        "js_flutter_animation.js",
+        "js_flutter_animation.js"
     ]);
 
     if (libFileSet.has(filePath)) {

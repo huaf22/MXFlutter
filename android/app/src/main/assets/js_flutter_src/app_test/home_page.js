@@ -35,7 +35,7 @@ let {
     TextAlign,
     Row,
     Padding,
-    Theme,
+    Theme
 } = jsFlutterRequire("js_flutter_ui.js");
 
 let { JSStudiesPage } = jsFlutterRequire("./studies.js");
@@ -92,6 +92,7 @@ class JSWidgetHomePage extends MXJSWidget {
                         this.navigatorPush(new JSPestoPage);
                     }
                 }),
+
                 new ListTile({
                     leading:new Icon(new IconData(0xe0d0,{fontFamily:'MaterialIcons'}),{color:Theme.of(context).primaryColor}),
                     trailing: new Icon(new IconData(0xe5df, {fontFamily: 'MaterialIcons', matchTextDirection: true})),
@@ -101,6 +102,7 @@ class JSWidgetHomePage extends MXJSWidget {
                         this.navigatorPush(new JSContactPage);
                     }
                 }),
+
                 new ListTile({
                     leading:new Icon(new IconData(0xe06d,{fontFamily:'MaterialIcons'})),
                     trailing: new Icon(new IconData(0xe5df, {fontFamily: 'MaterialIcons', matchTextDirection: true})),
@@ -110,6 +112,7 @@ class JSWidgetHomePage extends MXJSWidget {
                         this.navigatorPush(new JSAnimationPage);
                     }
                 }),
+
                 this.sectionTitle(context, "JSWidget Demo"),
 
                 new ListTile({
@@ -141,7 +144,7 @@ class JSWidgetHomePage extends MXJSWidget {
                     onTap: function () {
                         this.navigatorPush(new JSPestoPage);
                     }
-                }),
+                })
             ]
         });
 

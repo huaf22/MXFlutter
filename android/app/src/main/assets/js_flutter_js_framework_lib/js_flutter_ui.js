@@ -18,11 +18,11 @@ let imageExports = jsFlutterRequire("./js_flutter_image.js");
 let animationExports = jsFlutterRequire("./js_flutter_animation.js");
 
 
-module.exports = {
-    ...frameworkExports,
-    ...basicExports,
-    ...materialExports,
-    ...layoutExports,
-    ...textExports,
-    ...imageExports,
-    ...animationExports};
+module.exports = Object.assign(
+    frameworkExports,
+    basicExports,
+    materialExports,
+    layoutExports,
+    textExports,
+    imageExports,
+    animationExports);

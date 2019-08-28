@@ -38,12 +38,18 @@ android {
         disable 'InvalidPackage'
     }
 
+    //不引入flutter使用的图片等资源
+    aaptOptions {
+        ignoreAssetsPattern "flutter_gallery_assets"
+    }
+
     sourceSets{
         main{
             assets{
                 srcDirs 'src/main/assets'
                 srcDirs '../../js_flutter_src'
-                exclude '../../js_flutter_src/app_test/flutter_gallery_assets'
+
+
             }
         }
     }

@@ -32,6 +32,12 @@ public class MXFlutterActivity extends FlutterActivity {
     GeneratedPluginRegistrant.registerWith(this);
   }
 
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mMXJSFlutterEngine.unsetup();
+  }
+
   public void setup(){
     callFlutterQueue = new ArrayList<>(2);
     isFlutterEngineIsDidRender = true;

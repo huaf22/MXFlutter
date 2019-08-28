@@ -109,6 +109,9 @@ class AnimationController extends FlutterWidget {
             mirrorID: this.mirrorID,
             className: 'AnimationController',
             funcName: 'forward',
+            args: {
+                from: from,
+            },
         });
         invokeFlutterFunction(argument);
     }
@@ -118,6 +121,9 @@ class AnimationController extends FlutterWidget {
             mirrorID: this.mirrorID,
             className: 'AnimationController',
             funcName: 'reverse',
+            args: {
+                from: from,
+            },
         });
         invokeFlutterFunction(argument);
     }
@@ -127,6 +133,11 @@ class AnimationController extends FlutterWidget {
             mirrorID: this.mirrorID,
             className: 'AnimationController',
             funcName: 'repeat',
+            args: {
+                min: min,
+                max: max,
+                period: period
+            },
         });
         invokeFlutterFunction(argument);
     }

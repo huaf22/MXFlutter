@@ -62,6 +62,7 @@ class MXNativeJSFlutterAppProxy {
         }
 
         //MXNativeJSFlutterApp.callFlutterWidgetChannel(...arguments);
+        MXJSLog.log("DDDDDDD"+ method +"dddddd"+ args)
         MXNativeJSFlutterApp.callFlutterWidgetChannel(method, args);
     }
 
@@ -69,7 +70,11 @@ class MXNativeJSFlutterAppProxy {
 }
 
 function invokeFlutterFunction(flutterCallArgs){
-    arguments = JSON.stringify(flutterCallArgs);
+    if (g_platform === "android") {
+        arguments = {"invokeParams": JSON.stringify(flutterCallArgs)}
+    } else {
+        arguments = JSON.stringify(flutterCallArgs);
+    }
     MXNativeJSFlutterAppProxy.callFlutterWidgetChannel("invoke", arguments);
 }
 
@@ -287,6 +292,8 @@ class MXJSFlutterApp {
 
         MXJSLog.log("MXJSFlutterApp:nativeCall" + args);
 
+        args = args.paramJson
+        MXJSLog.log("DDDDDDDD"+ args)
         args = JSON.parse(args)
         let method = args["method"];
         let callArgs = args["arguments"];

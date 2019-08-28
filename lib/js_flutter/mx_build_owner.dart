@@ -302,6 +302,9 @@ class MXJsonBuildOwner {
   }
 
   void jsCallInvoke(widgetDataStr) {
+    if (widgetDataStr["invokeParams"] != null) {
+      widgetDataStr = widgetDataStr["invokeParams"];
+    }
     Map argMap = json.decode(widgetDataStr);
     String mirrorID = argMap["mirrorID"];
     dynamic mirrorObj = getMirrorObjectFromID(mirrorID);

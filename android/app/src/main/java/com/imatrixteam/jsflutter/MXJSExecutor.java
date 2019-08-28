@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.eclipsesource.v8.V8;
+import com.eclipsesource.v8.utils.V8ObjectUtils;
 
 import org.json.JSONObject;
 
@@ -47,7 +48,11 @@ public class MXJSExecutor {
     }
 
     public void execute(Runnable action) {
-        executor.execute(action);
+        try {
+            executor.execute(action);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setup() {
@@ -55,83 +60,82 @@ public class MXJSExecutor {
             @Override
             public void run() {
                 runtime = V8.createV8Runtime();
+                runtime.add("g_platform", "android");
             }
         });
     }
 
     public void registerJavaMethod(JavaVoidCallback callback, String name) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                runtime.registerJavaMethod(callback, name);
-            }
-        });
+        try {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    runtime.registerJavaMethod(callback, name);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void registerJavaMethod(JavaCallback callback, String name) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                runtime.registerJavaMethod(callback, name);
-            }
-        });
+        try {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    runtime.registerJavaMethod(callback, name);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void registerJavaMethod(Object object, String methodName, String jsFunctionName, Class<?>[] parameterTypes) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                runtime.registerJavaMethod(object,  methodName,  jsFunctionName, parameterTypes);
-            }
-        });
-    }
-
-    public void executeScriptAsync(String script, ExecuteScriptCallback callback) {
-        Object result = runtime.executeScript(script);
-        callback.onComplete(result);
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                Object result = runtime.executeScript(script);
-//                ((Activity)context).runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        callback.onComplete(result);
-//                    }
-//                });
-//            }
-//        });
+        try {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    runtime.registerJavaMethod(object,  methodName,  jsFunctionName, parameterTypes);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void executeScriptPath(String path, ExecuteScriptCallback callback) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                String script = FileUtils.getFromAssets(context, path);
-                V8Object result = runtime.executeObjectScript(script);
-//                ((Activity)context).runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        callback.onComplete(result);
-//                    }
-//                });
-            }
-        });
+        try {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    String script = FileUtils.getFromAssets(context, path);
+                    V8Object result = runtime.executeObjectScript(script);
+                    callback.onComplete(result);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void executeScript(String script, ExecuteScriptCallback callback) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Object result = runtime.executeScript(script);
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onComplete(result);
-                    }
-                });
-            }
-        });
+        try {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Object result = runtime.executeScript(script);
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onComplete(result);
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isValid() {
@@ -139,29 +143,41 @@ public class MXJSExecutor {
     }
 
     public void invalidate() {
-        if (isValid()) {
-            runtime.release();
-        }
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (isValid()) {
+                    runtime.release();
+                }
+            }
+        });
     }
 
     interface ExecuteScriptCallback{
         void onComplete(Object value);
     }
 
-    public void invokeJSValue(V8Object jsAppObj, String method, Object args, MXJSValueCallback callback){
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-                //获取执行结果
-                if (jsAppObj != null) {
-                    jsAppObj.executeFunction(method, new V8Array(runtime).push(new JSONObject((Map) args).toString()));
-                }
-//            }
-//        });
+    interface InvokeJSValueCallback {
+        void onSuccess(Object value);
+        void onFail(Error error);
     }
 
-    interface MXJSExecutorBlock {
-        void execute(MXJSExecutor executor);
+    public void invokeJSValue(V8Object jsAppObj, String method, Object args, InvokeJSValueCallback callback){
+        //获取执行结果
+        if (jsAppObj != null) {
+            try {
+                Object result = jsAppObj.executeFunction(method, new V8Array(runtime).push(
+                       new V8Object(runtime).add("paramJson", new JSONObject((Map) args).toString()))
+                );
+
+                callback.onSuccess(result);
+            }catch (Exception e) {
+                callback.onFail(new Error(e.getMessage()));
+                e.printStackTrace();
+            }
+        } else {
+            callback.onFail(new Error("jsObjectNull"));
+        }
     }
 }
 

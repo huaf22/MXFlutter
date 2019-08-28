@@ -77,7 +77,7 @@ public class MXJSEngine {
                 if (args.length() > 0) {
                     String filePath = args.get(0).toString();
 
-                    filePath = filePath.replaceFirst("./","");
+                    //filePath = filePath.replaceFirst("./","");
 
                     String absolutePath = "";
                     String jsScript = "";

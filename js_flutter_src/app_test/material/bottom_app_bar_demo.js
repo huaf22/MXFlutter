@@ -8,7 +8,7 @@
 let g_isNativeEnvironment = typeof JSAPI_require != "undefined" ? true : false;
 function jsFlutterRequire(file) {
   if (!g_isNativeEnvironment) {
-    console.log("[JS]-MXJSFlutter:: jsFlutterRequire", ...arguments);
+    //console.log("[JS]-MXJSFlutter:: jsFlutterRequire", ...arguments);
     let { calcJSFrameworkFilePath } = require("./js_ide_node_run_support.js");
     return require(calcJSFrameworkFilePath(file));
   }
@@ -165,7 +165,7 @@ class _JSRadioItem extends MXJSWidget{
         this.groupValue = groupValue;
         this.onChanged = onChanged;
 
-        console.log("[JS]-MXJSFlutter:: jsFlutterRequire..........", value , groupValue);
+        //console.log("[JS]-MXJSFlutter:: jsFlutterRequire..........", value , groupValue);
 
     }
 
@@ -272,7 +272,7 @@ class JSBottomAPPBarDemo extends MXJSWidget {
     }
 
     onShowNotchChanged(value) {
-        console.log("[JS]-MXJSFlutter:: jsFlutterRequire..........");
+        //console.log("[JS]-MXJSFlutter:: jsFlutterRequire..........");
         this.setState(function() {
             this._showNotch = value;
         });

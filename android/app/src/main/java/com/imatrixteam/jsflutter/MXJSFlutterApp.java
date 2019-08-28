@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.eclipsesource.v8.V8Object;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -81,11 +83,19 @@ public class MXJSFlutterApp {
                         @Override
                         public void run() {
                             if (jsAppObj == null) return;
-                            currentApp.jsExecutor.invokeJSValue(jsAppObj,"nativeCall", methodCall.arguments, new MXJSValueCallback());
+                            currentApp.jsExecutor.invokeJSValue(jsAppObj, "nativeCall", methodCall.arguments, new MXJSExecutor.InvokeJSValueCallback() {
+                                @Override
+                                public void onSuccess(Object value) {
+
+                                }
+
+                                @Override
+                                public void onFail(Error error) {
+
+                                }
+                            });
                         }
                     });
-
-                    //}
                 }
             }
         });
@@ -126,8 +136,8 @@ public class MXJSFlutterApp {
     }
 
     public void exitApp() {
-        this.jsAppObj = null;
-        this.jsEngine = null;
+//        this.jsAppObj.release();
+//        this.jsExecutor.invalidate();
     }
 
 

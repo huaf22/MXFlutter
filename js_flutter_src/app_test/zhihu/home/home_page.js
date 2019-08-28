@@ -82,7 +82,7 @@ class HomePage extends MXJSWidget {
                                 start: new BorderSide({
                                     color: GlobalConfig.fontColor,
                                     width: 1.0,
-                                },)
+                                })
                             }),
                         }),
                         height: 14.0,

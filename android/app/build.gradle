@@ -38,6 +38,16 @@ android {
         disable 'InvalidPackage'
     }
 
+    sourceSets{
+        main{
+            assets{
+                srcDirs 'src/main/assets'
+                srcDirs '../../js_flutter_src'
+                exclude '../../js_flutter_src/app_test/flutter_gallery_assets'
+            }
+        }
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.imatrixteam.jsflutter"

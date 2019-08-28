@@ -54,7 +54,7 @@ public class MXJSFlutterApp {
         jsEngine.addSearchDir(jsFlutterFrameworkDir);
 
         //app业务代码搜索路径
-        String jsAppCoreDir = "js_flutter_src/app_test";
+        String jsAppCoreDir = "app_test";
         jsEngine.addSearchDir(jsAppCoreDir);
 
         String jsBasicLibPath = jsFlutterFrameworkDir + "/" +  "js_basic_lib.js";
@@ -117,7 +117,7 @@ public class MXJSFlutterApp {
             }
         });
 
-        jsExecutor.executeScriptPath("js_flutter_src/app_test/main.js", new MXJSExecutor.ExecuteScriptCallback() {
+        jsExecutor.executeScriptPath("app_test/main.js", new MXJSExecutor.ExecuteScriptCallback() {
             @Override
             public void onComplete(Object value) {
 

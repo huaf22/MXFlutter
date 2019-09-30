@@ -1,6 +1,37 @@
 .DS_Store
 .dart_tool/
 
+/.idea
+/.gradle
+/local.properties
+local.properties
+/build
+/captures
+/app/build
+*.iml
+.settings/
+
+# Eclipse project files
+.classpath
+.project
+/.settings
+
+# OSX files
+.DS_Store
+.DS_Store?
+
+# Windows thumbnail db
+ehthumbs.db
+Thumbs.db
+
+# OS-specific files
+._*
+.Spotlight-V100
+.Trashes
+
+# Log Files
+*.log
+
 .packages
 .pub/
 

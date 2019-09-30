@@ -17,8 +17,7 @@ void main() {
 }
 
 void test(){
-
-
+  print("test");
 }
 
 class InheritedContext extends InheritedWidget {

@@ -1,10 +1,9 @@
 package com.imatrixteam.jsflutter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.eclipsesource.v8.V8Object;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -12,36 +11,27 @@ import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
+import static android.content.ContentValues.TAG;
+
 public class MXJSFlutterApp {
 
-    static MXJSFlutterEngine jsFlutterEngineStatic;
+    //Flutter通道
+    private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
+    MethodChannel flutterChannel;
 
     private Context mContext;
-
     private String appName;
-    private MXJSFlutterEngine jsFlutterEngine;
-
     private V8Object jsAppObj;
     private MXJSEngine jsEngine;
     private MXJSExecutor jsExecutor;
 
-    private MXJSFlutterApp currentApp;
 
-    //Flutter通道
-    private static final String FLUTTER_METHED_CHANNEL_NAME = "js_flutter.js_flutter_app_channel";
-    MethodChannel jsFlutterAppChannel;
-
-    public MXJSFlutterApp initWithAppName(Context context, String appName, MXJSFlutterEngine jsFlutterEngine) {
+    public MXJSFlutterApp(Context context, String appName) {
         this.mContext = context;
         this.appName = appName;
-        this.jsFlutterEngine = jsFlutterEngine;
-        jsFlutterEngineStatic = jsFlutterEngine;
 
         setupJSEngine();
-        setUpChannel(((MXFlutterActivity)context).getFlutterView());
-
-        currentApp = this;
-        return this;
+        setUpChannel(((MXFlutterActivity) context).getFlutterView());
     }
 
     private void setupJSEngine() {
@@ -52,46 +42,50 @@ public class MXJSFlutterApp {
         String jsBasePath = "";
 
         //JSFlutter JS运行库搜索路径
-        String jsFlutterFrameworkDir = "js_flutter_js_framework_lib";
+        String jsFlutterFrameworkDir = "framework";
         jsEngine.addSearchDir(jsFlutterFrameworkDir);
 
         //app业务代码搜索路径
         String jsAppCoreDir = "app_test";
         jsEngine.addSearchDir(jsAppCoreDir);
 
-        String jsBasicLibPath = jsFlutterFrameworkDir + "/" +  "js_basic_lib.js";
+        String jsBasicLibPath = jsFlutterFrameworkDir + "/" + "js_basic_lib.js";
         jsExecutor.executeScriptPath(jsBasicLibPath, new MXJSExecutor.ExecuteScriptCallback() {
             @Override
             public void onComplete(Object value) {
-
+                Log.d(TAG, "setupJSEngine onComplete: " + value);
             }
         });
 
     }
 
-    //flutter --> js
-    void setUpChannel(BinaryMessenger flutterViewController) {
-        jsFlutterAppChannel = new MethodChannel(flutterViewController,FLUTTER_METHED_CHANNEL_NAME);
-        jsFlutterAppChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+    void setUpChannel(BinaryMessenger messenger) {
+        flutterChannel = new MethodChannel(messenger, FLUTTER_METHED_CHANNEL_NAME);
+
+        // flutter --> native
+        flutterChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
-                if(currentApp == null)
+                Log.e(TAG, "flutterChannel flutter -> native: " + methodCall.method + " ,args: " + methodCall.arguments);
+                if (MXJSFlutterApp.this == null) {
                     return;
-
-                if(methodCall.method.equals("callJS")){
-                    currentApp.jsExecutor.execute(new Runnable() {
+                }
+                if (methodCall.method.equals("callJS")) {
+                    MXJSFlutterApp.this.jsExecutor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            if (jsAppObj == null) return;
-                            currentApp.jsExecutor.invokeJSValue(jsAppObj, "nativeCall", methodCall.arguments, new MXJSExecutor.InvokeJSValueCallback() {
+                            if (jsAppObj == null) {
+                                return;
+                            }
+                            jsExecutor.invokeJSValue(jsAppObj, "nativeCall", methodCall.arguments, new MXJSExecutor.InvokeJSValueCallback() {
                                 @Override
                                 public void onSuccess(Object value) {
-
+                                    Log.d(TAG, "setUpChannel flutterChannel onSuccess: " + value);
                                 }
 
                                 @Override
                                 public void onFail(Error error) {
-
+                                    Log.d(TAG, "setUpChannel flutterChannel onFail: " + error);
                                 }
                             });
                         }
@@ -100,7 +94,6 @@ public class MXJSFlutterApp {
             }
         });
     }
-
 
     public void unsetup() {
 
@@ -111,26 +104,25 @@ public class MXJSFlutterApp {
     }
 
     public void runAppWithPageName(String pageName) {
-
         jsExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                MXNativeJSFlutterApp MXNativeJSFlutterApp = new MXNativeJSFlutterApp();
-                V8Object v8Object = new V8Object(jsExecutor.runtime);
-                jsExecutor.runtime.add("MXNativeJSFlutterApp",v8Object);
-                v8Object.registerJavaMethod(MXNativeJSFlutterApp, "setCurrentJSApp",
-                        "setCurrentJSApp", new Class<?>[]{V8Object.class});
-                v8Object.registerJavaMethod(MXNativeJSFlutterApp,
-                        "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
-                v8Object.registerJavaMethod(MXNativeJSFlutterApp,
-                        "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class,V8Object.class,});
+                // 向JS中注入对象
+                V8Object v8Object = new V8Object(jsExecutor.getV8Runtime());
+
+                MXNativeJSFlutterApp app = new MXNativeJSFlutterApp();
+                v8Object.registerJavaMethod(app, "setCurrentJSApp", "setCurrentJSApp", new Class<?>[]{V8Object.class});
+                v8Object.registerJavaMethod(app, "callFlutterReloadApp", "callFlutterReloadApp", new Class<?>[]{V8Object.class, String.class});
+                v8Object.registerJavaMethod(app, "callFlutterWidgetChannel", "callFlutterWidgetChannel", new Class<?>[]{String.class, V8Object.class,});
+
+                jsExecutor.getV8Runtime().add("MXNativeJSFlutterApp", v8Object);
             }
         });
 
         jsExecutor.executeScriptPath("app_test/main.js", new MXJSExecutor.ExecuteScriptCallback() {
             @Override
             public void onComplete(Object value) {
-
+                Log.d(TAG, "MXJSFlutterApp runAppWithPageName, execute complete: " + value);
             }
         });
     }
@@ -141,31 +133,40 @@ public class MXJSFlutterApp {
     }
 
 
-    //js 注入对象
+    /**
+     * 向 js 注入的对象
+     */
     class MXNativeJSFlutterApp {
 
         //js --> native
         public void setCurrentJSApp(V8Object jsApp) {
-            jsAppObj = (V8Object) jsExecutor.runtime.get("currentJSApp");
+            Log.d(TAG, "MXNativeJSFlutterApp setCurrentJSApp jsApp: " + jsApp);
+            jsAppObj = (V8Object) jsExecutor.getV8Runtime().get("currentJSApp");
         }
 
         //js --> flutter
         public void callFlutterReloadApp(V8Object jsApp, String widgetData) {
-            jsAppObj = (V8Object) jsExecutor.runtime.get("currentJSApp");
-            jsFlutterEngine.callFlutterReloadAppWithJSWidgetData(widgetData);
+            Log.d(TAG, "MXNativeJSFlutterApp callFlutterReloadApp widgetData: " + widgetData);
+
+            jsAppObj = (V8Object) jsExecutor.getV8Runtime().get("currentJSApp");
+            MXJSFlutterEngine.getInstance(mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
         }
 
         //js --> flutter
         public void callFlutterWidgetChannel(String methodName, V8Object args) {
             String[] datas = args.getKeys();
-            HashMap dataMap =  new HashMap();
+            HashMap dataMap = new HashMap();
             for (int i = 0; i < datas.length; i++) {
-                dataMap.put(datas[i],args.get(datas[i]));
+                dataMap.put(datas[i], args.get(datas[i]));
             }
-            ((MXFlutterActivity)mContext).runOnUiThread(new Runnable() {
+
+            Log.e(Constants.TAG, "MXNativeJSFlutterApp js -> native: " + methodName + " args: " + dataMap);
+
+            ((MXFlutterActivity) mContext).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    jsFlutterAppChannel.invokeMethod(methodName, dataMap);
+                    Log.e(Constants.TAG, "MXNativeJSFlutterApp flutterChannel native -> flutter: " + methodName + " args: " + dataMap);
+                    flutterChannel.invokeMethod(methodName, dataMap);
                 }
             });
         }

@@ -1,16 +1,13 @@
 package com.imatrixteam.jsflutter;
 
 import android.content.Context;
-import android.os.Build;
 
 public class MXJSFlutterEngine {
 
+    private static MXJSFlutterEngine INSTANCE;
     private String rootPath;
     private MXJSFlutterApp currentApp;
-
     private Context mContext;
-
-    private static MXJSFlutterEngine INSTANCE;
 
     private MXJSFlutterEngine(Context context) {
         this.mContext = context;
@@ -30,8 +27,7 @@ public class MXJSFlutterEngine {
     }
 
     public void unsetup() {
-        if (currentApp != null)
-        {
+        if (currentApp != null) {
             currentApp.exitApp();
             currentApp = null;
         }
@@ -39,8 +35,7 @@ public class MXJSFlutterEngine {
 
     public void runApp(String appName, String pageName) {
         setup();
-        currentApp = new MXJSFlutterApp();
-        currentApp.initWithAppName(mContext, appName, this);
+        currentApp = new MXJSFlutterApp(mContext, appName);
         currentApp.runAppWithPageName(pageName);
     }
 
@@ -49,6 +44,6 @@ public class MXJSFlutterEngine {
     }
 
     public void callFlutterReloadAppWithJSWidgetData(String widgetData) {
-        ((MXFlutterActivity)mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
+        ((MXFlutterActivity) mContext).callFlutterReloadAppWithJSWidgetData(widgetData);
     }
 }

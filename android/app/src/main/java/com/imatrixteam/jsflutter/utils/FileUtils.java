@@ -1,4 +1,4 @@
-package com.imatrixteam.jsflutter;
+package com.imatrixteam.jsflutter.utils;
 
 import android.content.Context;
 
